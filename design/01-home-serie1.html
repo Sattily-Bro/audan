@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Audan.kz — Главная: пять направлений</title>
+</head>
+<body>
+
+<style>
+  /* ---------- Studio wrapper (theme-aware) ---------- */
+  :root{
+    --bg:#EDECE7; --ink:#1B1B18; --muted:#6E6C64; --card:#FFFFFF;
+    --line:#DEDCD4; --accent:#0E7A46;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#16171A; --ink:#ECEBE6; --muted:#96948C; --card:#1F2024; --line:#2E2F34; --accent:#3DBB7B; }
+  }
+  :root[data-theme="dark"]{ --bg:#16171A; --ink:#ECEBE6; --muted:#96948C; --card:#1F2024; --line:#2E2F34; --accent:#3DBB7B; }
+  :root[data-theme="light"]{ --bg:#EDECE7; --ink:#1B1B18; --muted:#6E6C64; --card:#FFFFFF; --line:#DEDCD4; --accent:#0E7A46; }
+
+  body{ background:var(--bg); color:var(--ink); font-family:var(--font);
+        -webkit-font-smoothing:antialiased; margin:0; }
+  .wrap{ max-width:1440px; margin:0 auto; padding:56px 32px 80px; }
+
+  .kicker{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin:0 0 14px; }
+  h1{ font-size:clamp(28px,4vw,44px); line-height:1.08; letter-spacing:-.02em; margin:0 0 16px; text-wrap:balance; font-weight:800; }
+  .lede{ font-size:16px; line-height:1.55; color:var(--muted); max-width:64ch; margin:0; }
+  .lede b{ color:var(--ink); font-weight:600; }
+
+  .principles{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; margin:36px 0 8px; }
+  .pr{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px 18px; }
+  .pr h3{ margin:0 0 6px; font-size:13.5px; font-weight:700; }
+  .pr p{ margin:0; font-size:13px; line-height:1.5; color:var(--muted); }
+
+  .stage{ display:flex; flex-wrap:wrap; gap:48px 40px; justify-content:center; margin-top:56px; }
+  .slot{ width:min(392px,100%); display:flex; flex-direction:column; align-items:center; }
+
+  /* ---------- Phone frame ---------- */
+  .phone{ width:min(392px,100%); border-radius:48px; background:#0B0B0D; padding:10px;
+          box-shadow:0 24px 60px rgba(0,0,0,.28), 0 2px 8px rgba(0,0,0,.18); }
+  .screen{ border-radius:40px; overflow:hidden; height:780px; display:flex; flex-direction:column; background:#fff; position:relative; }
+  .app{ flex:1; overflow-y:auto; overscroll-behavior:contain; scrollbar-width:none; }
+  .app::-webkit-scrollbar{ display:none; }
+
+  .status{ display:flex; justify-content:space-between; align-items:center; padding:14px 26px 4px; font-size:13px; font-weight:600; }
+  .status .pins{ display:flex; gap:5px; align-items:center; }
+  .status i{ display:block; border-radius:2px; }
+
+  .caption{ margin-top:26px; width:100%; }
+  .caption .tag{ display:inline-block; font-size:11px; font-weight:800; letter-spacing:.1em; padding:4px 10px; border-radius:999px; margin-bottom:10px; }
+  .caption h2{ margin:0 0 6px; font-size:20px; font-weight:800; letter-spacing:-.01em; }
+  .caption .thesis{ margin:0 0 14px; font-size:14px; line-height:1.5; color:var(--muted); }
+  .caption ul{ margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:7px; }
+  .caption li{ font-size:13px; line-height:1.45; padding-left:18px; position:relative; }
+  .caption li::before{ content:""; position:absolute; left:2px; top:7px; width:6px; height:6px; border-radius:2px; background:currentColor; opacity:.5; }
+  .caption li.risk{ color:var(--muted); }
+  .caption li.risk::before{ border-radius:50%; background:none; border:1.5px solid currentColor; width:5px; height:5px; }
+
+  .verdict{ margin-top:72px; background:var(--card); border:1px solid var(--line); border-radius:20px; padding:32px 36px; max-width:860px; margin-left:auto; margin-right:auto; }
+  .verdict h2{ margin:0 0 14px; font-size:22px; font-weight:800; letter-spacing:-.01em; }
+  .verdict p{ margin:0 0 12px; font-size:15px; line-height:1.6; color:var(--muted); }
+  .verdict p b{ color:var(--ink); font-weight:650; }
+  .footnote{ text-align:center; margin-top:40px; font-size:12.5px; color:var(--muted); }
+
+  @media (prefers-reduced-motion: no-preference){
+    .slot{ animation:rise .6s ease both; }
+    .slot:nth-child(2){ animation-delay:.08s; } .slot:nth-child(3){ animation-delay:.16s; }
+    @keyframes rise{ from{ opacity:0; transform:translateY(14px);} to{ opacity:1; transform:none;} }
+  }
+
+  /* ---------- Shared in-app bits ---------- */
+  .screen{ font-family:var(--font); color:#17190F; }
+  .ic{ width:24px; height:24px; flex:none; }
+  .tabbar{ flex:none; display:flex; padding:8px 8px 6px; border-top:1px solid rgba(0,0,0,.07); background:#fff; }
+  .tab{ flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; font-size:10.5px; font-weight:600; color:#9A9AA0; padding:4px 0 2px; }
+  .tab .ic{ width:23px; height:23px; }
+  .homebar{ flex:none; display:flex; justify-content:center; padding:6px 0 8px; background:#fff; }
+  .homebar i{ width:120px; height:5px; border-radius:3px; background:#111; opacity:.9; }
+  .num{ font-variant-numeric:tabular-nums; }
+  .clamp2{ display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .clamp3{ display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+  .hs{ display:flex; gap:10px; overflow-x:auto; scrollbar-width:none; padding:2px 20px 6px; }
+  .hs::-webkit-scrollbar{ display:none; }
+  .ph{ background:linear-gradient(140deg,#E9E5DB,#D9D3C5); display:flex; align-items:center; justify-content:center; color:#B4AC9A; }
+  .ph .ic{ width:26px; height:26px; }
+
+  /* =================================================================
+     V1 — «Сервисы» : Kaspi-DNA, белый + зелёный
+  ================================================================== */
+  .v1 .screen{ background:#F7F8F7; }
+  .v1 .status{ color:#17190F; }
+  .v1-head{ display:flex; align-items:center; justify-content:space-between; padding:10px 20px 14px; }
+  .v1-logo{ font-size:22px; font-weight:800; letter-spacing:-.02em; }
+  .v1-logo em{ font-style:normal; color:#0E9E54; }
+  .v1-logo span{ display:block; font-size:11.5px; font-weight:600; color:#8B8E88; letter-spacing:0; margin-top:1px; }
+  .v1-bell{ position:relative; width:42px; height:42px; border-radius:50%; background:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 1px 3px rgba(20,40,25,.08); color:#17190F; }
+  .v1-bell b{ position:absolute; top:9px; right:9px; width:9px; height:9px; border-radius:50%; background:#E5484D; border:2px solid #fff; }
+
+  .v1-widgets{ display:flex; gap:10px; padding:0 20px 18px; }
+  .v1-wg{ flex:1; background:#fff; border-radius:18px; padding:13px 14px; box-shadow:0 1px 3px rgba(20,40,25,.07); display:flex; align-items:center; gap:10px; }
+  .v1-wg .ic{ width:30px; height:30px; padding:6px; border-radius:11px; box-sizing:content-box; }
+  .v1-wg .t{ min-width:0; }
+  .v1-wg .a{ font-size:15.5px; font-weight:800; letter-spacing:-.01em; }
+  .v1-wg .b{ font-size:11.5px; color:#8B8E88; font-weight:600; margin-top:1px; white-space:nowrap; }
+  .v1-wg--sun .ic{ color:#E8930C; background:#FFF3DC; }
+  .v1-wg--fuel .ic{ color:#0E9E54; background:#E5F5EC; }
+
+  .v1-sect{ padding:2px 20px 10px; display:flex; align-items:baseline; justify-content:space-between; }
+  .v1-sect h4{ margin:0; font-size:17px; font-weight:800; letter-spacing:-.01em; }
+  .v1-sect a{ font-size:13px; font-weight:700; color:#0E9E54; text-decoration:none; }
+
+  .v1-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:0 20px 22px; }
+  .v1-card{ background:#fff; border-radius:20px; padding:15px 15px 13px; box-shadow:0 1px 3px rgba(20,40,25,.07); display:flex; flex-direction:column; gap:10px; }
+  .v1-card .ic{ width:26px; height:26px; padding:9px; border-radius:14px; box-sizing:content-box; color:#0B7A41; background:#E5F5EC; }
+  .v1-card .n{ font-size:15px; font-weight:750; letter-spacing:-.01em; line-height:1.15; }
+  .v1-card .c{ font-size:12px; color:#8B8E88; font-weight:600; margin-top:2px; }
+  .v1-card .c b{ color:#0E9E54; font-weight:800; }
+
+  .v1-ad{ flex:none; width:150px; background:#fff; border-radius:16px; overflow:hidden; box-shadow:0 1px 3px rgba(20,40,25,.07); }
+  .v1-ad .ph{ height:104px; }
+  .v1-ad .in{ padding:9px 11px 11px; }
+  .v1-ad .p{ font-size:14.5px; font-weight:800; letter-spacing:-.01em; }
+  .v1-ad .t{ font-size:11.5px; line-height:1.3; color:#5C5F5A; margin-top:3px; height:30px; }
+  .v1-ad .v{ font-size:10.5px; color:#A0A39D; margin-top:4px; font-weight:600; }
+
+  .v1-post{ background:#fff; border-radius:18px; margin:0 20px 10px; padding:14px 15px; box-shadow:0 1px 3px rgba(20,40,25,.07); }
+  .v1-post .who{ display:flex; align-items:center; gap:9px; margin-bottom:8px; }
+  .v1-post .av{ width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:#fff; }
+  .v1-post .nm{ font-size:13.5px; font-weight:750; }
+  .v1-post .tm{ font-size:11px; color:#A0A39D; font-weight:600; }
+  .v1-post .tx{ font-size:13.5px; line-height:1.45; color:#2A2C26; }
+  .v1-post .ft{ display:flex; gap:16px; margin-top:10px; color:#8B8E88; font-size:12px; font-weight:700; align-items:center; }
+  .v1-post .ft .ic{ width:16px; height:16px; }
+  .v1 .tab.on{ color:#0E9E54; }
+
+  /* =================================================================
+     V2 — «Витрина города» : контент-первый, тёплая бумага + абрикос
+  ================================================================== */
+  .v2 .screen{ background:#FBFAF6; }
+  .v2 .status{ color:#221E1A; }
+  .v2-top{ display:flex; align-items:center; justify-content:space-between; padding:8px 22px 0; }
+  .v2-mark{ font-size:12px; font-weight:800; letter-spacing:.16em; color:#D96A17; }
+  .v2-bell{ color:#221E1A; opacity:.8; }
+  .v2-hero{ padding:6px 22px 16px; }
+  .v2-hero h1{ font-size:40px; font-weight:800; letter-spacing:-.03em; margin:0; color:#221E1A; line-height:1; }
+  .v2-hero .m{ display:flex; align-items:center; gap:7px; margin-top:7px; font-size:13.5px; font-weight:600; color:#8A837A; }
+  .v2-hero .m .ic{ width:17px; height:17px; color:#E8930C; }
+  .v2-hero .m b{ color:#221E1A; font-weight:750; }
+
+  .v2-rail{ padding-left:22px; padding-right:22px; padding-bottom:20px; }
+  .v2-svc{ flex:none; width:64px; display:flex; flex-direction:column; align-items:center; gap:6px; text-decoration:none; }
+  .v2-svc .bx{ width:56px; height:56px; border-radius:19px; display:flex; align-items:center; justify-content:center; color:#fff; }
+  .v2-svc span{ font-size:10.5px; font-weight:650; color:#4A453E; text-align:center; line-height:1.15; }
+
+  .v2-h{ padding:4px 22px 10px; display:flex; align-items:baseline; justify-content:space-between; }
+  .v2-h h4{ margin:0; font-size:16.5px; font-weight:800; letter-spacing:-.01em; color:#221E1A; }
+  .v2-h a{ font-size:12.5px; font-weight:750; color:#D96A17; text-decoration:none; }
+
+  .v2-news{ margin:0 22px 22px; background:#fff; border:1px solid #EFEAE1; border-radius:18px; padding:16px 17px; }
+  .v2-news .src{ display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:800; color:#D96A17; background:#FCEEDF; border-radius:999px; padding:4px 10px; }
+  .v2-news h5{ margin:10px 0 6px; font-size:15.5px; font-weight:775; line-height:1.3; letter-spacing:-.01em; color:#221E1A; }
+  .v2-news p{ margin:0; font-size:13px; line-height:1.5; color:#6E675E; }
+  .v2-news .ft{ margin-top:10px; font-size:11.5px; color:#A69E92; font-weight:600; }
+
+  .v2-ads{ display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:0 22px 22px; }
+  .v2-ad{ background:#fff; border:1px solid #EFEAE1; border-radius:16px; overflow:hidden; }
+  .v2-ad .ph{ height:96px; }
+  .v2-ad .in{ padding:10px 12px 12px; }
+  .v2-ad .p{ font-size:15px; font-weight:800; letter-spacing:-.01em; color:#221E1A; }
+  .v2-ad .t{ font-size:11.5px; line-height:1.35; color:#6E675E; margin-top:3px; height:31px; }
+  .v2-ad .v{ margin-top:6px; font-size:10.5px; font-weight:650; color:#A69E92; }
+
+  .v2-fuel{ margin:0 22px 22px; background:#221E1A; border-radius:18px; padding:16px 17px 8px; color:#F5F1EA; }
+  .v2-fuel .hd{ display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+  .v2-fuel .hd b{ font-size:15px; font-weight:775; letter-spacing:-.01em; }
+  .v2-fuel .hd span{ font-size:11px; font-weight:650; color:#B3AB9E; }
+  .v2-fuel table{ width:100%; border-collapse:collapse; font-size:12.5px; }
+  .v2-fuel th{ text-align:left; font-size:10px; font-weight:700; letter-spacing:.08em; color:#8F8779; padding:6px 0; text-transform:uppercase; }
+  .v2-fuel th.r, .v2-fuel td.r{ text-align:right; }
+  .v2-fuel td{ padding:8px 0; border-top:1px solid rgba(255,255,255,.09); font-weight:600; }
+  .v2-fuel td.r{ font-weight:750; }
+  .v2-fuel .best{ color:#FFB35C; }
+  .v2-post{ margin:0 22px 12px; background:#fff; border:1px solid #EFEAE1; border-radius:16px; padding:13px 15px; }
+  .v2-post .who{ display:flex; gap:9px; align-items:center; margin-bottom:7px; }
+  .v2-post .av{ width:32px; height:32px; border-radius:50%; background:#EADFCE; color:#8A6D3B; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px; }
+  .v2-post .nm{ font-size:13px; font-weight:750; color:#221E1A; }
+  .v2-post .tm{ font-size:11px; color:#A69E92; font-weight:600; }
+  .v2-post .tx{ font-size:13px; line-height:1.45; color:#3B362F; }
+  .v2 .tabbar{ background:#FBFAF6; }
+  .v2 .homebar{ background:#FBFAF6; }
+  .v2 .tab.on{ color:#D96A17; }
+
+  /* =================================================================
+     V3 — «Плитки» : максимальная простота, цветные ряды
+  ================================================================== */
+  .v3 .screen{ background:#F1F2F6; }
+  .v3 .status{ color:#14161C; }
+  .v3-head{ padding:8px 22px 4px; display:flex; align-items:center; justify-content:space-between; }
+  .v3-logo{ font-size:21px; font-weight:800; letter-spacing:-.02em; color:#14161C; }
+  .v3-logo span{ color:#0E8C7F; }
+  .v3-lang{ display:flex; background:#E3E5EC; border-radius:12px; padding:3px; }
+  .v3-lang b{ font-size:12px; font-weight:750; padding:6px 13px; border-radius:9px; color:#6C7080; }
+  .v3-lang b.on{ background:#fff; color:#14161C; box-shadow:0 1px 2px rgba(10,15,30,.12); }
+
+  .v3-greet{ padding:10px 22px 18px; font-size:14px; font-weight:600; color:#6C7080; }
+  .v3-greet b{ color:#14161C; font-weight:750; }
+
+  .v3-lbl{ padding:0 22px 9px; font-size:11px; font-weight:800; letter-spacing:.12em; color:#8A8E9B; }
+  .v3-list{ display:flex; flex-direction:column; gap:9px; padding:0 16px 20px; }
+  .v3-row{ display:flex; align-items:center; gap:13px; border-radius:20px; padding:13px 15px; color:#fff; min-height:44px; }
+  .v3-row .bub{ width:44px; height:44px; flex:none; border-radius:50%; background:rgba(255,255,255,.22); display:flex; align-items:center; justify-content:center; }
+  .v3-row .t{ flex:1; min-width:0; }
+  .v3-row .n{ font-size:16.5px; font-weight:775; letter-spacing:-.01em; }
+  .v3-row .s{ font-size:12px; font-weight:600; opacity:.82; margin-top:2px; }
+  .v3-row .ic.ch{ width:20px; height:20px; opacity:.75; }
+
+  .v3-info{ margin:0 16px 12px; background:#fff; border-radius:18px; padding:14px 16px; display:flex; align-items:center; gap:12px; box-shadow:0 1px 3px rgba(15,20,40,.06); }
+  .v3-info .ic{ width:26px; height:26px; padding:8px; border-radius:12px; box-sizing:content-box; }
+  .v3-info .a{ font-size:14.5px; font-weight:775; color:#14161C; }
+  .v3-info .b{ font-size:12px; color:#8A8E9B; font-weight:600; margin-top:1px; }
+  .v3 .tab.on{ color:#14161C; }
+
+  /* =================================================================
+     V4 — «Системный» : Untitled UI токены, Kaspi-грид, главная-состояние
+     gray-scale/radius/shadow — из кита; brand = UUI violet 600
+  ================================================================== */
+  .v4 .screen{ background:#F9FAFB; }
+  .v4 .status{ color:#101828; }
+  .v4-head{ display:flex; align-items:center; gap:11px; padding:8px 20px 12px; }
+  .v4-ava{ width:42px; height:42px; border-radius:50%; background:#F4EBFF; color:#6941C6; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:15px; }
+  .v4-hi{ flex:1; min-width:0; }
+  .v4-hi .a{ font-size:16px; font-weight:750; color:#101828; letter-spacing:-.01em; }
+  .v4-hi .b{ font-size:12px; color:#667085; font-weight:600; margin-top:1px; }
+  .v4-bell{ position:relative; width:40px; height:40px; border-radius:50%; background:#fff; border:1px solid #EAECF0; display:flex; align-items:center; justify-content:center; color:#344054; box-shadow:0 1px 2px rgba(16,24,40,.05); }
+  .v4-bell b{ position:absolute; top:8px; right:9px; width:8px; height:8px; border-radius:50%; background:#F04438; border:2px solid #fff; }
+  .v4-search{ margin:0 20px 16px; display:flex; align-items:center; gap:9px; background:#fff; border:1px solid #D0D5DD; border-radius:10px; padding:11px 13px; box-shadow:0 1px 2px rgba(16,24,40,.05); color:#667085; font-size:14px; }
+  .v4-search .ic{ width:19px; height:19px; color:#667085; }
+
+  .v4-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px 6px; padding:0 16px 8px; }
+  .v4-it{ display:flex; flex-direction:column; align-items:center; gap:6px; }
+  .v4-it .bx{ width:52px; height:52px; border-radius:16px; background:#fff; border:1px solid #EAECF0; box-shadow:0 1px 2px rgba(16,24,40,.05); display:flex; align-items:center; justify-content:center; color:#6941C6; position:relative; }
+  .v4-it .bx .ic{ width:24px; height:24px; }
+  .v4-it .bx i{ position:absolute; top:-5px; right:-7px; background:#7F56D9; color:#fff; font-style:normal; font-size:9.5px; font-weight:800; border-radius:999px; padding:2px 6px; border:2px solid #F9FAFB; }
+  .v4-it span{ font-size:10.5px; font-weight:650; color:#344054; text-align:center; line-height:1.15; }
+
+  .v4-lbl{ padding:14px 20px 9px; font-size:13px; font-weight:800; color:#101828; letter-spacing:-.01em; display:flex; justify-content:space-between; align-items:baseline; }
+  .v4-lbl a{ font-size:12px; font-weight:700; color:#6941C6; text-decoration:none; }
+
+  .v4-card{ margin:0 20px 10px; background:#fff; border:1px solid #EAECF0; border-radius:12px; box-shadow:0 1px 2px rgba(16,24,40,.05); padding:13px 14px; }
+  .v4-badge{ display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:750; border-radius:999px; padding:3px 9px; border:1px solid; }
+  .v4-badge.warn{ color:#B54708; background:#FFFAEB; border-color:#FEDF89; }
+  .v4-badge.ok{ color:#067647; background:#ECFDF3; border-color:#ABEFC6; }
+  .v4-badge.gray{ color:#344054; background:#F9FAFB; border-color:#EAECF0; }
+  .v4-order .top{ display:flex; justify-content:space-between; align-items:center; }
+  .v4-order .nm{ font-size:14px; font-weight:750; color:#101828; }
+  .v4-order .sub{ font-size:12px; color:#667085; font-weight:600; margin-top:2px; }
+  .v4-steps{ display:flex; gap:5px; margin-top:11px; }
+  .v4-steps i{ flex:1; height:5px; border-radius:3px; background:#EAECF0; }
+  .v4-steps i.on{ background:#7F56D9; }
+  .v4-mine{ display:flex; align-items:center; gap:11px; }
+  .v4-mine .ph{ width:44px; height:44px; border-radius:10px; flex:none; }
+  .v4-mine .t{ flex:1; min-width:0; }
+  .v4-mine .n{ font-size:13.5px; font-weight:700; color:#101828; }
+  .v4-mine .s{ font-size:11.5px; color:#667085; font-weight:600; margin-top:1px; }
+  .v4-feed{ display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:0 20px 22px; }
+  .v4-fc{ background:#fff; border:1px solid #EAECF0; border-radius:12px; overflow:hidden; box-shadow:0 1px 2px rgba(16,24,40,.05); }
+  .v4-fc .ph{ height:92px; }
+  .v4-fc .in{ padding:9px 11px 11px; }
+  .v4-fc .p{ font-size:14.5px; font-weight:800; color:#101828; letter-spacing:-.01em; }
+  .v4-fc .t{ font-size:11.5px; color:#475467; line-height:1.35; margin-top:3px; height:31px; }
+  .v4-fc .v{ font-size:10.5px; color:#98A2B3; font-weight:650; margin-top:5px; }
+  .v4 .tab.on{ color:#6941C6; }
+
+  /* =================================================================
+     V5 — «Действия» : jobs-to-be-done, глагольная главная
+     UUI-токены, акцент — success-600
+  ================================================================== */
+  .v5 .screen{ background:#FFFFFF; }
+  .v5 .status{ color:#101828; }
+  .v5-head{ display:flex; align-items:center; justify-content:space-between; padding:8px 20px 2px; }
+  .v5-logo{ font-size:20px; font-weight:800; letter-spacing:-.02em; color:#101828; }
+  .v5-logo b{ color:#079455; }
+  .v5-city{ display:flex; align-items:center; gap:6px; font-size:12.5px; font-weight:700; color:#344054; background:#F9FAFB; border:1px solid #EAECF0; border-radius:999px; padding:6px 12px; }
+  .v5-city .ic{ width:14px; height:14px; color:#079455; }
+  .v5-q{ padding:14px 20px 4px; font-size:23px; font-weight:800; letter-spacing:-.02em; color:#101828; line-height:1.15; }
+  .v5-search{ margin:12px 20px 18px; display:flex; align-items:center; gap:10px; background:#F9FAFB; border:1.5px solid #D0D5DD; border-radius:999px; padding:13px 17px; color:#667085; font-size:14.5px; font-weight:550; }
+  .v5-search .ic{ width:20px; height:20px; }
+
+  .v5-acts{ display:flex; flex-direction:column; gap:9px; padding:0 20px 20px; }
+  .v5-act{ display:flex; align-items:center; gap:12px; border-radius:14px; padding:14px 15px; font-size:15px; font-weight:750; letter-spacing:-.01em; }
+  .v5-act .ic{ width:22px; height:22px; }
+  .v5-act.pri{ background:#079455; color:#fff; box-shadow:0 1px 2px rgba(16,24,40,.1); }
+  .v5-act.sec{ background:#fff; color:#101828; border:1px solid #D0D5DD; box-shadow:0 1px 2px rgba(16,24,40,.05); }
+  .v5-act.sec .ic{ color:#079455; }
+  .v5-act .chev{ margin-left:auto; width:18px; height:18px; opacity:.6; }
+
+  .v5-lbl{ padding:4px 20px 10px; font-size:13px; font-weight:800; color:#101828; letter-spacing:-.01em; }
+  .v5-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:13px 6px; padding:0 16px 18px; }
+  .v5-it{ display:flex; flex-direction:column; align-items:center; gap:6px; }
+  .v5-it .bx{ width:48px; height:48px; border-radius:14px; background:#F2F4F7; display:flex; align-items:center; justify-content:center; color:#344054; }
+  .v5-it .bx .ic{ width:22px; height:22px; }
+  .v5-it span{ font-size:10.5px; font-weight:650; color:#344054; text-align:center; line-height:1.15; }
+
+  .v5-now{ display:flex; gap:8px; padding:0 20px 18px; flex-wrap:wrap; }
+  .v5-chip{ display:flex; align-items:center; gap:6px; font-size:12px; font-weight:700; color:#344054; background:#F9FAFB; border:1px solid #EAECF0; border-radius:999px; padding:7px 12px; }
+  .v5-chip .ic{ width:14px; height:14px; color:#079455; }
+  .v5-chip.hot .ic{ color:#E8930C; }
+
+  .v5-do{ margin:0 20px 9px; display:flex; align-items:center; gap:12px; background:#fff; border:1px solid #EAECF0; border-radius:12px; padding:12px 14px; box-shadow:0 1px 2px rgba(16,24,40,.05); }
+  .v5-do .dot{ width:38px; height:38px; flex:none; border-radius:11px; display:flex; align-items:center; justify-content:center; }
+  .v5-do .dot .ic{ width:19px; height:19px; }
+  .v5-do .t{ flex:1; min-width:0; }
+  .v5-do .n{ font-size:13.5px; font-weight:750; color:#101828; }
+  .v5-do .s{ font-size:11.5px; color:#667085; font-weight:600; margin-top:1px; }
+  .v5-do .chev{ width:17px; height:17px; color:#98A2B3; }
+  .v5 .tab.on{ color:#079455; }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><circle cx="7" cy="7" r="1.2" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M2 12h2.5M19.5 12H22M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7s6.8 7.3 6.8 11.5a6.8 6.8 0 01-13.6 0C5.2 10 12 2.7 12 2.7z"/></symbol>
+    <symbol id="i-brief" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></symbol>
+    <symbol id="i-tool" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></symbol>
+    <symbol id="i-cam" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <p class="kicker">Audan.kz · Concept 01 · Главная</p>
+  <h1>Пять направлений главной страницы</h1>
+  <p class="lede">Аудитория — жители Шу и посёлков района: широкий возраст, бюджетные Android-телефоны, главный референс цифрового продукта — Kaspi. Отсюда общая рамка для всех вариантов: <b>каждый сервис упакован как продукт</b>, у каждого — живая цифра вместо абстрактной иконки. Варианты 1–3 — три разных характера бренда; варианты 4–5 собраны на токенах <b>Untitled UI</b> и думают продуктом: состояние, счётчики, действия. Контент в макетах настоящий, снят с raion.kz сегодня: цены АЗС, объявления, посты жителей.</p>
+
+  <div class="principles">
+    <div class="pr"><h3>Таб-бар всегда</h3><p>Пять постоянных вкладок вместо «хаба с плавающей кнопкой назад». Никаких скрытых жестов — всё видно.</p></div>
+    <div class="pr"><h3>Живые цифры</h3><p>«12 вакансий», «АИ-92 от 195 ₸» — сервис доказывает пользу до тапа, как витрины Kaspi.</p></div>
+    <div class="pr"><h3>Крупно и просто</h3><p>Цели от 44 px, короткие слова, цена — самый крупный элемент карточки объявления.</p></div>
+    <div class="pr"><h3>Светлая тема — намеренно</h3><p>Дешёвые экраны и яркое солнце на улице: интерфейс приложения светлый в любом режиме ОС.</p></div>
+  </div>
+
+  <div class="stage">
+
+    <!-- ============================ V1 ============================ -->
+    <div class="slot">
+      <div class="phone v1"><div class="screen">
+        <div class="app">
+          <div class="status"><span>9:41</span><span class="pins"><i style="width:16px;height:9px;background:#17190F;opacity:.85"></i><i style="width:22px;height:10px;background:#17190F;opacity:.35"></i></span></div>
+          <div class="v1-head">
+            <div class="v1-logo">Aud<em>a</em>n<span>Шу қаласы</span></div>
+            <div class="v1-bell"><svg class="ic" style="width:20px;height:20px"><use href="#i-bell"/></svg><b></b></div>
+          </div>
+          <div class="v1-widgets">
+            <div class="v1-wg v1-wg--sun"><svg class="ic"><use href="#i-sun"/></svg><div class="t"><div class="a">+34°</div><div class="b">Солнечно</div></div></div>
+            <div class="v1-wg v1-wg--fuel"><svg class="ic"><use href="#i-drop"/></svg><div class="t"><div class="a num">от 195 ₸</div><div class="b">АИ-92 · Helios</div></div></div>
+          </div>
+
+          <div class="v1-sect"><h4>Сервисы</h4></div>
+          <div class="v1-grid">
+            <div class="v1-card"><svg class="ic"><use href="#i-tag"/></svg><div><div class="n">Объявления</div><div class="c"><b>29</b> свежих</div></div></div>
+            <div class="v1-card"><svg class="ic"><use href="#i-brief"/></svg><div><div class="n">Работа</div><div class="c"><b>12</b> вакансий</div></div></div>
+            <div class="v1-card"><svg class="ic"><use href="#i-bag"/></svg><div><div class="n">Еда из кафе</div><div class="c"><b>6</b> заведений</div></div></div>
+            <div class="v1-card"><svg class="ic"><use href="#i-tool"/></svg><div><div class="n">Мастера</div><div class="c"><b>31</b> специалист</div></div></div>
+            <div class="v1-card"><svg class="ic"><use href="#i-map"/></svg><div><div class="n">Карта Шу</div><div class="c"><b>214</b> мест</div></div></div>
+            <div class="v1-card"><svg class="ic"><use href="#i-zap"/></svg><div><div class="n">Подработка</div><div class="c"><b>8</b> заданий</div></div></div>
+          </div>
+
+          <div class="v1-sect"><h4>Свежее на базаре</h4><a>Все 29 →</a></div>
+          <div class="hs" style="padding-bottom:22px">
+            <div class="v1-ad"><div class="ph"><svg class="ic"><use href="#i-cam"/></svg></div><div class="in"><div class="p num">25 000 000 ₸</div><div class="t clamp2">Дом, 170 м², гараж, баня</div><div class="v">Шу қаласы</div></div></div>
+            <div class="v1-ad"><div class="ph" style="background:linear-gradient(140deg,#E2E7E0,#CBD4C8)"><svg class="ic"><use href="#i-cam"/></svg></div><div class="in"><div class="p num">50 000 ₸</div><div class="t clamp2">Двухъярусная кровать, почти новая</div><div class="v">Шу қаласы</div></div></div>
+            <div class="v1-ad"><div class="ph" style="background:linear-gradient(140deg,#E8E2DA,#D6CBBB)"><svg class="ic"><use href="#i-cam"/></svg></div><div class="in"><div class="p num">20 000 ₸</div><div class="t clamp2">Катушки свечей зажигания, Mercedes</div><div class="v">Шу қаласы</div></div></div>
+          </div>
+
+          <div class="v1-sect"><h4>Лента Шу</h4><a>Открыть →</a></div>
+          <div class="v1-post">
+            <div class="who"><div class="av" style="background:#5B8DEF">Б</div><div><div class="nm">Балнур</div><div class="tm">2 дня назад</div></div></div>
+            <div class="tx">кушти сайт шу каласына👍</div>
+            <div class="ft"><span style="display:flex;gap:5px;align-items:center"><svg class="ic"><use href="#i-heart"/></svg>1</span><span style="display:flex;gap:5px;align-items:center"><svg class="ic"><use href="#i-chat"/></svg>0</span></div>
+          </div>
+          <div class="v1-post" style="margin-bottom:24px">
+            <div class="who"><div class="av" style="background:#E08A3C">Е</div><div><div class="nm">Еко</div><div class="tm">6 дней назад</div></div></div>
+            <div class="tx clamp2">Ооо😍😍 жақсы сайт ашылыпты күшті🥳🥳 бәрі бар екен ішінде…</div>
+            <div class="ft"><span style="display:flex;gap:5px;align-items:center"><svg class="ic"><use href="#i-heart"/></svg>2</span><span style="display:flex;gap:5px;align-items:center"><svg class="ic"><use href="#i-chat"/></svg>1</span></div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab on"><svg class="ic"><use href="#i-home"/></svg>Главная</div>
+          <div class="tab"><svg class="ic"><use href="#i-map"/></svg>Карта</div>
+          <div class="tab"><svg class="ic"><use href="#i-tag"/></svg>Базар</div>
+          <div class="tab"><svg class="ic"><use href="#i-chat"/></svg>Лента</div>
+          <div class="tab"><svg class="ic"><use href="#i-user"/></svg>Профиль</div>
+        </div>
+        <div class="homebar"><i></i></div>
+      </div></div>
+      <div class="caption" style="color:var(--ink)">
+        <span class="tag" style="background:#E5F5EC;color:#0B7A41">Вариант 1</span>
+        <h2>«Сервисы» — супер-апп</h2>
+        <p class="thesis">Прямое наследование ментальной модели Kaspi: белые карточки, один фирменный зелёный, сервисы — герой экрана, каждый со своей живой цифрой.</p>
+        <ul>
+          <li>Мгновенно считывается любым, кто пользуется Kaspi — то есть всеми.</li>
+          <li>Виджеты погоды и бензина дают повод открывать приложение каждый день.</li>
+          <li>Монохромные иконки — самый дешёвый в поддержке визуал: новый сервис не требует новой палитры.</li>
+          <li class="risk">Риск: «как Kaspi» — одновременно и сила, и упрёк во вторичности.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ============================ V2 ============================ -->
+    <div class="slot">
+      <div class="phone v2"><div class="screen">
+        <div class="app">
+          <div class="status"><span>9:41</span><span class="pins"><i style="width:16px;height:9px;background:#221E1A;opacity:.85"></i><i style="width:22px;height:10px;background:#221E1A;opacity:.35"></i></span></div>
+          <div class="v2-top"><span class="v2-mark">AUDAN</span><svg class="ic v2-bell" style="width:21px;height:21px"><use href="#i-bell"/></svg></div>
+          <div class="v2-hero">
+            <h1>Шу</h1>
+            <div class="m"><svg class="ic"><use href="#i-sun"/></svg><b>+34°</b><span>·</span><span>суббота, 9 августа</span></div>
+          </div>
+
+          <div class="hs v2-rail">
+            <div class="v2-svc"><div class="bx" style="background:#D96A17"><svg class="ic"><use href="#i-tag"/></svg></div><span>Базар</span></div>
+            <div class="v2-svc"><div class="bx" style="background:#8A6D3B"><svg class="ic"><use href="#i-brief"/></svg></div><span>Работа</span></div>
+            <div class="v2-svc"><div class="bx" style="background:#4E7A3A"><svg class="ic"><use href="#i-bag"/></svg></div><span>Еда</span></div>
+            <div class="v2-svc"><div class="bx" style="background:#3D6B8F"><svg class="ic"><use href="#i-map"/></svg></div><span>Карта</span></div>
+            <div class="v2-svc"><div class="bx" style="background:#7A5296"><svg class="ic"><use href="#i-tool"/></svg></div><span>Мастера</span></div>
+            <div class="v2-svc"><div class="bx" style="background:#B04A4A"><svg class="ic"><use href="#i-zap"/></svg></div><span>Шабашка</span></div>
+            <div class="v2-svc"><div class="bx" style="background:#4A5560"><svg class="ic"><use href="#i-cam"/></svg></div><span>Stories</span></div>
+          </div>
+
+          <div class="v2-h"><h4>Сегодня в городе</h4></div>
+          <div class="v2-news">
+            <span class="src">Новости Шу</span>
+            <h5>42 ирригационных канала реконструируют в Шуском районе</h5>
+            <p class="clamp3">Стартовал один из самых масштабных водохозяйственных проектов последних лет: ремонт и бетонирование 42 каналов протяжённостью свыше 263 км. Орошение улучшится на 31 тысяче гектаров.</p>
+            <div class="ft">8 июля · 2 отметки «нравится»</div>
+          </div>
+
+          <div class="v2-h"><h4>Свежее на базаре</h4><a>Все →</a></div>
+          <div class="v2-ads">
+            <div class="v2-ad"><div class="ph"><svg class="ic"><use href="#i-cam"/></svg></div><div class="in"><div class="p num">25 000 000 ₸</div><div class="t clamp2">Дом, 170 м², гараж, баня</div><div class="v">Шу қаласы · 2 авг</div></div></div>
+            <div class="v2-ad"><div class="ph" style="background:linear-gradient(140deg,#E4E0D6,#CFC5B2)"><svg class="ic"><use href="#i-cam"/></svg></div><div class="in"><div class="p num">50 000 ₸</div><div class="t clamp2">Двухъярусная кровать, новая</div><div class="v">Шу қаласы · 2 авг</div></div></div>
+          </div>
+
+          <div class="v2-h"><h4>Бензин сегодня</h4></div>
+          <div class="v2-fuel">
+            <div class="hd"><b>АЗС города</b><span>обновлено утром</span></div>
+            <table class="num">
+              <tr><th>Заправка</th><th class="r">АИ-92</th><th class="r">АИ-95</th><th class="r">ДТ</th></tr>
+              <tr><td>Helios</td><td class="r best">195</td><td class="r">205</td><td class="r">299</td></tr>
+              <tr><td>КазМунайГаз</td><td class="r">206</td><td class="r">235</td><td class="r">301</td></tr>
+              <tr><td>CNPC-Шу</td><td class="r">207</td><td class="r">234</td><td class="r">298</td></tr>
+            </table>
+          </div>
+
+          <div class="v2-h"><h4>Жители пишут</h4><a>Лента →</a></div>
+          <div class="v2-post">
+            <div class="who"><div class="av">А</div><div><div class="nm">Айдана</div><div class="tm">2 августа</div></div></div>
+            <div class="tx clamp2">Өте тамаша сайт екен. Ең бастысы кереметінің бәрі бар. Шу қаласы дами берсін, көркейе берсін!</div>
+          </div>
+          <div style="height:18px"></div>
+        </div>
+        <div class="tabbar">
+          <div class="tab on"><svg class="ic"><use href="#i-home"/></svg>Главная</div>
+          <div class="tab"><svg class="ic"><use href="#i-map"/></svg>Карта</div>
+          <div class="tab"><svg class="ic"><use href="#i-tag"/></svg>Базар</div>
+          <div class="tab"><svg class="ic"><use href="#i-chat"/></svg>Лента</div>
+          <div class="tab"><svg class="ic"><use href="#i-user"/></svg>Профиль</div>
+        </div>
+        <div class="homebar"><i></i></div>
+      </div></div>
+      <div class="caption" style="color:var(--ink)">
+        <span class="tag" style="background:#FCEEDF;color:#B85510">Вариант 2</span>
+        <h2>«Витрина города» — контент первым</h2>
+        <p class="thesis">Герой экрана — сам Шу: погода, новости, цены, что продают соседи. Сервисы сжаты в ряд иконок, тёплая бумажная палитра вместо «интерфейсного» белого.</p>
+        <ul>
+          <li>Отвечает на «что нового?» без единого тапа — сильнейший крючок ежедневного захода.</li>
+          <li>Таблица АЗС и новости превращают главную в утренний ритуал.</li>
+          <li>Характер: не выглядит ни как Kaspi, ни как старый сайт.</li>
+          <li class="risk">Риск: сервисы в ряду иконок менее заметны — путь «пришёл дать объявление» на один взгляд длиннее.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ============================ V3 ============================ -->
+    <div class="slot">
+      <div class="phone v3"><div class="screen">
+        <div class="app">
+          <div class="status"><span>9:41</span><span class="pins"><i style="width:16px;height:9px;background:#14161C;opacity:.85"></i><i style="width:22px;height:10px;background:#14161C;opacity:.35"></i></span></div>
+          <div class="v3-head">
+            <div class="v3-logo">Audan<span>.</span></div>
+            <div class="v3-lang"><b>ҚАЗ</b><b class="on">РУС</b></div>
+          </div>
+          <div class="v3-greet">Сәлеметсіз бе! · <b>Шу қаласы, +34°</b></div>
+
+          <div class="v3-lbl">ГОРОД</div>
+          <div class="v3-list">
+            <div class="v3-row" style="background:#0E8C7F"><div class="bub"><svg class="ic"><use href="#i-map"/></svg></div><div class="t"><div class="n">Карта Шу</div><div class="s">214 мест: кафе, магазины, аптеки</div></div><svg class="ic ch"><use href="#i-chev"/></svg></div>
+            <div class="v3-row" style="background:#4655B8"><div class="bub"><svg class="ic"><use href="#i-chat"/></svg></div><div class="t"><div class="n">Лента города</div><div class="s">5 новых постов сегодня</div></div><svg class="ic ch"><use href="#i-chev"/></svg></div>
+            <div class="v3-row" style="background:#A84A6E"><div class="bub"><svg class="ic"><use href="#i-cam"/></svg></div><div class="t"><div class="n">Фото жителей</div><div class="s">Фото дня уже выбрано</div></div><svg class="ic ch"><use href="#i-chev"/></svg></div>
+          </div>
+
+          <div class="v3-lbl">СЕРВИСЫ</div>
+          <div class="v3-list">
+            <div class="v3-row" style="background:#7A4FB8"><div class="bub"><svg class="ic"><use href="#i-tag"/></svg></div><div class="t"><div class="n">Объявления</div><div class="s">29 свежих · дом от 25 млн ₸</div></div><svg class="ic ch"><use href="#i-chev"/></svg></div>
+            <div class="v3-row" style="background:#2568C4"><div class="bub"><svg class="ic"><use href="#i-brief"/></svg></div><div class="t"><div class="n">Работа</div><div class="s">12 вакансий в Шу</div></div><svg class="ic ch"><use href="#i-chev"/></svg></div>
+            <div class="v3-row" style="background:#0E8CA8"><div class="bub"><svg class="ic"><use href="#i-zap"/></svg></div><div class="t"><div class="n">Подработка</div><div class="s">8 разовых заданий</div></div><svg class="ic ch"><use href="#i-chev"/></svg></div>
+            <div class="v3-row" style="background:#C4650F"><div class="bub"><svg class="ic"><use href="#i-bag"/></svg></div><div class="t"><div class="n">Еда из кафе</div><div class="s">6 заведений принимают заказы</div></div><svg class="ic ch"><use href="#i-chev"/></svg></div>
+            <div class="v3-row" style="background:#1A8A4C"><div class="bub"><svg class="ic"><use href="#i-tool"/></svg></div><div class="t"><div class="n">Мастера и услуги</div><div class="s">31 специалист рядом</div></div><svg class="ic ch"><use href="#i-chev"/></svg></div>
+          </div>
+
+          <div class="v3-lbl">СЕГОДНЯ</div>
+          <div class="v3-info"><svg class="ic" style="color:#0E8C7F;background:#E0F2EF"><use href="#i-drop"/></svg><div><div class="a num">АИ-92 от 195 ₸</div><div class="b">Дешевле всего — Helios, ул. Желтоксан 3</div></div></div>
+          <div class="v3-info" style="margin-bottom:24px"><svg class="ic" style="color:#C4650F;background:#F9EDDE"><use href="#i-sun"/></svg><div><div class="a">+34°, солнечно</div><div class="b">Вечером +26°, без осадков</div></div></div>
+        </div>
+        <div class="tabbar">
+          <div class="tab on"><svg class="ic"><use href="#i-home"/></svg>Главная</div>
+          <div class="tab"><svg class="ic"><use href="#i-map"/></svg>Карта</div>
+          <div class="tab"><svg class="ic"><use href="#i-tag"/></svg>Базар</div>
+          <div class="tab"><svg class="ic"><use href="#i-chat"/></svg>Лента</div>
+          <div class="tab"><svg class="ic"><use href="#i-user"/></svg>Профиль</div>
+        </div>
+        <div class="homebar"><i></i></div>
+      </div></div>
+      <div class="caption" style="color:var(--ink)">
+        <span class="tag" style="background:#E7E4F6;color:#4A3F9E">Вариант 3</span>
+        <h2>«Плитки» — максимальная простота</h2>
+        <p class="thesis">Экран-меню: каждый сервис — крупный цветной ряд со своим цветом-идентичностью, подписью-пользой и стрелкой. Переключатель ҚАЗ/РУС — на самом видном месте.</p>
+        <ul>
+          <li>Понятно с первого взгляда человеку, который до этого пользовался только WhatsApp.</li>
+          <li>Цвет сервиса сквозной: та же плитка узнаётся внутри раздела — навигация по цвету, не по чтению.</li>
+          <li>Язык — крупный видимый переключатель, а не спрятанный в настройках: для аудитории это критично.</li>
+          <li class="risk">Риск: на главной нет контента — меньше поводов открывать приложение «просто посмотреть».</li>
+        </ul>
+      </div>
+    </div>
+    <!-- ============================ V4 ============================ -->
+    <div class="slot">
+      <div class="phone v4"><div class="screen">
+        <div class="app">
+          <div class="status"><span>9:41</span><span class="pins"><i style="width:16px;height:9px;background:#101828;opacity:.85"></i><i style="width:22px;height:10px;background:#101828;opacity:.35"></i></span></div>
+          <div class="v4-head">
+            <div class="v4-ava">АС</div>
+            <div class="v4-hi"><div class="a">Сәлем, Аружан!</div><div class="b">Шу қаласы · +34°</div></div>
+            <div class="v4-bell"><svg class="ic" style="width:19px;height:19px"><use href="#i-bell"/></svg><b></b></div>
+          </div>
+          <div class="v4-search"><svg class="ic"><use href="#i-search"/></svg>Поиск: iPhone, электрик, самса…</div>
+
+          <div class="v4-grid">
+            <div class="v4-it"><div class="bx"><svg class="ic"><use href="#i-tag"/></svg><i>29</i></div><span>Объявления</span></div>
+            <div class="v4-it"><div class="bx"><svg class="ic"><use href="#i-brief"/></svg><i>12</i></div><span>Работа</span></div>
+            <div class="v4-it"><div class="bx"><svg class="ic"><use href="#i-zap"/></svg></div><span>Подработка</span></div>
+            <div class="v4-it"><div class="bx"><svg class="ic"><use href="#i-bag"/></svg></div><span>Еда</span></div>
+            <div class="v4-it"><div class="bx"><svg class="ic"><use href="#i-tool"/></svg></div><span>Мастера</span></div>
+            <div class="v4-it"><div class="bx"><svg class="ic"><use href="#i-map"/></svg></div><span>Карта Шу</span></div>
+            <div class="v4-it"><div class="bx"><svg class="ic"><use href="#i-chat"/></svg><i>5</i></div><span>Лента</span></div>
+            <div class="v4-it"><div class="bx"><svg class="ic"><use href="#i-cam"/></svg></div><span>Stories</span></div>
+          </div>
+
+          <div class="v4-lbl">Сейчас происходит</div>
+          <div class="v4-card v4-order">
+            <div class="top"><div class="nm">Заказ №14 · Аружан кафе</div><span class="v4-badge warn">Готовится</span></div>
+            <div class="sub">2 лагмана, 1 шашлык · 4 300 ₸ · доставка ~40 мин</div>
+            <div class="v4-steps"><i class="on"></i><i class="on"></i><i></i><i></i></div>
+          </div>
+          <div class="v4-card v4-mine">
+            <div class="ph" style="background:linear-gradient(140deg,#EAECF0,#D0D5DD)"><svg class="ic" style="width:18px;height:18px;color:#98A2B3;margin:13px"><use href="#i-cam"/></svg></div>
+            <div class="t"><div class="n">Дом, 170 м² · <span class="num">25 000 000 ₸</span></div><div class="s">Ваше объявление · 47 просмотров за сутки</div></div>
+            <span class="v4-badge ok">На сайте</span>
+          </div>
+
+          <div class="v4-lbl">Свежее в Шу<a>Все →</a></div>
+          <div class="v4-feed">
+            <div class="v4-fc"><div class="ph"><svg class="ic"><use href="#i-cam"/></svg></div><div class="in"><div class="p num">50 000 ₸</div><div class="t clamp2">Двухъярусная кровать, почти новая</div><div class="v">Шу қаласы · вчера</div></div></div>
+            <div class="v4-fc"><div class="ph" style="background:linear-gradient(140deg,#E6E9E2,#CDD4C4)"><svg class="ic"><use href="#i-cam"/></svg></div><div class="in"><div class="p num">20 000 ₸</div><div class="t clamp2">Катушки свечей зажигания, Mercedes</div><div class="v">Шу қаласы · вчера</div></div></div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab on"><svg class="ic"><use href="#i-home"/></svg>Главная</div>
+          <div class="tab"><svg class="ic"><use href="#i-map"/></svg>Карта</div>
+          <div class="tab"><svg class="ic"><use href="#i-tag"/></svg>Базар</div>
+          <div class="tab"><svg class="ic"><use href="#i-chat"/></svg>Лента</div>
+          <div class="tab"><svg class="ic"><use href="#i-user"/></svg>Профиль</div>
+        </div>
+        <div class="homebar"><i></i></div>
+      </div></div>
+      <div class="caption" style="color:var(--ink)">
+        <span class="tag" style="background:#F4EBFF;color:#6941C6">Вариант 4</span>
+        <h2>«Системный» — Untitled UI + грид Kaspi</h2>
+        <p class="thesis">Собран строго на токенах Untitled UI (серые, радиусы, тени, бейджи). Все 8 сервисов — иконками над сгибом, как у Kaspi. Главная — не витрина, а центр состояния: заказ, объявление, счётчики.</p>
+        <ul>
+          <li>Блок «Сейчас происходит» — сильнейший UX-ход: статус заказа и модерации сам находит пользователя, а не наоборот.</li>
+          <li>Счётчики-бейджи на иконках создают привычку проверять приложение.</li>
+          <li>Дизайн-система из коробки: каждый следующий экран собирается из готовых UUI-компонентов — самая быстрая дорога до релиза.</li>
+          <li class="risk">Риск: у гостя без заказов середина экрана пустеет — нужен продуманный «гостевой» вариант блока.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ============================ V5 ============================ -->
+    <div class="slot">
+      <div class="phone v5"><div class="screen">
+        <div class="app">
+          <div class="status"><span>9:41</span><span class="pins"><i style="width:16px;height:9px;background:#101828;opacity:.85"></i><i style="width:22px;height:10px;background:#101828;opacity:.35"></i></span></div>
+          <div class="v5-head">
+            <div class="v5-logo">Audan<b>.</b></div>
+            <div class="v5-city"><svg class="ic"><use href="#i-map"/></svg>Шу қаласы</div>
+          </div>
+          <div class="v5-q">Что нужно сделать?</div>
+          <div class="v5-search"><svg class="ic"><use href="#i-search"/></svg>Найти: товар, мастера, вакансию…</div>
+
+          <div class="v5-acts">
+            <div class="v5-act pri"><svg class="ic"><use href="#i-tag"/></svg>Продать вещь<svg class="ic chev"><use href="#i-chev"/></svg></div>
+            <div class="v5-act sec"><svg class="ic"><use href="#i-bag"/></svg>Заказать еду из кафе<svg class="ic chev"><use href="#i-chev"/></svg></div>
+            <div class="v5-act sec"><svg class="ic"><use href="#i-brief"/></svg>Найти работу или подработку<svg class="ic chev"><use href="#i-chev"/></svg></div>
+          </div>
+
+          <div class="v5-lbl">Все сервисы</div>
+          <div class="v5-grid">
+            <div class="v5-it"><div class="bx"><svg class="ic"><use href="#i-tag"/></svg></div><span>Объявления</span></div>
+            <div class="v5-it"><div class="bx"><svg class="ic"><use href="#i-brief"/></svg></div><span>Работа</span></div>
+            <div class="v5-it"><div class="bx"><svg class="ic"><use href="#i-zap"/></svg></div><span>Подработка</span></div>
+            <div class="v5-it"><div class="bx"><svg class="ic"><use href="#i-bag"/></svg></div><span>Еда</span></div>
+            <div class="v5-it"><div class="bx"><svg class="ic"><use href="#i-tool"/></svg></div><span>Мастера</span></div>
+            <div class="v5-it"><div class="bx"><svg class="ic"><use href="#i-map"/></svg></div><span>Карта Шу</span></div>
+            <div class="v5-it"><div class="bx"><svg class="ic"><use href="#i-chat"/></svg></div><span>Лента</span></div>
+            <div class="v5-it"><div class="bx"><svg class="ic"><use href="#i-cam"/></svg></div><span>Stories</span></div>
+          </div>
+
+          <div class="v5-lbl">Сейчас в Шу</div>
+          <div class="v5-now">
+            <div class="v5-chip hot"><svg class="ic"><use href="#i-sun"/></svg>+34°, солнечно</div>
+            <div class="v5-chip"><svg class="ic"><use href="#i-drop"/></svg><span class="num">АИ-92 от 195 ₸</span></div>
+            <div class="v5-chip"><svg class="ic"><use href="#i-chat"/></svg>5 новых постов</div>
+          </div>
+
+          <div class="v5-lbl">Ваши дела</div>
+          <div class="v5-do">
+            <div class="dot" style="background:#FFFAEB;color:#DC6803"><svg class="ic"><use href="#i-bag"/></svg></div>
+            <div class="t"><div class="n">Заказ №14 готовится</div><div class="s">Аружан кафе · доставка ~40 мин</div></div>
+            <svg class="ic chev"><use href="#i-chev"/></svg>
+          </div>
+          <div class="v5-do" style="margin-bottom:24px">
+            <div class="dot" style="background:#ECFDF3;color:#079455"><svg class="ic"><use href="#i-tag"/></svg></div>
+            <div class="t"><div class="n">Объявление опубликовано</div><div class="s">Дом, 170 м² · 47 просмотров за сутки</div></div>
+            <svg class="ic chev"><use href="#i-chev"/></svg>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab on"><svg class="ic"><use href="#i-home"/></svg>Главная</div>
+          <div class="tab"><svg class="ic"><use href="#i-map"/></svg>Карта</div>
+          <div class="tab"><svg class="ic"><use href="#i-tag"/></svg>Базар</div>
+          <div class="tab"><svg class="ic"><use href="#i-chat"/></svg>Лента</div>
+          <div class="tab"><svg class="ic"><use href="#i-user"/></svg>Профиль</div>
+        </div>
+        <div class="homebar"><i></i></div>
+      </div></div>
+      <div class="caption" style="color:var(--ink)">
+        <span class="tag" style="background:#ECFDF3;color:#067647">Вариант 5</span>
+        <h2>«Действия» — глагольная главная</h2>
+        <p class="thesis">Экран строится не вокруг разделов, а вокруг задач: «продать», «заказать», «найти». Три главных действия — кнопками, полный каталог сервисов — гридом ниже, статусы дел — в самом низу.</p>
+        <ul>
+          <li>Совпадает с тем, как думает пользователь: он приходит не «в раздел объявлений», а «продать корову».</li>
+          <li>Три действия покрывают ~80% сценариев маленького города — путь до цели один тап.</li>
+          <li>Тоже на токенах Untitled UI — V4 и V5 совместимы, элементы переносимы между ними без адаптации.</li>
+          <li class="risk">Риск: порядок «главных действий» — гипотеза; нужно подтвердить аналитикой событий из таблицы events.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="verdict">
+    <h2>Рекомендация студии</h2>
+    <p><b>База — Вариант 4 «Системный»</b>: грид сервисов как у Kaspi (мгновенное доверие аудитории), блок «Сейчас происходит» (статусы заказа и модерации сами находят пользователя) и Untitled UI под капотом — все следующие экраны собираются из готовых компонентов, это самая короткая дорога до релиза.</p>
+    <p>К нему забираем: <b>переключатель ҚАЗ/РУС из Варианта 3</b> — видимый, в шапке; <b>чипы «Сейчас в Шу» из Варианта 5</b> (погода · бензин · посты) как ежедневный крючок; для гостя без заказов блок состояния заменяется <b>витриной свежих объявлений из Варианта 2</b>.</p>
+    <p>Вариант 1 — запасной, если владельцу нужен максимально «каспиевый» вид; Вариант 5 — эксперимент, который стоит проверить аналитикой (таблица events уже есть в БД); Вариант 2 — «дальний маяк», если портал вырастет в медиа города.</p>
+  </div>
+
+  <p class="footnote">Прототип: шрифт системный (в продукте — гротеск с полной кириллицей, подберём на этапе токенов); фото заменены плейсхолдерами — живые фото подтянутся из API. Все цены, объявления и посты — реальные данные raion.kz от 9 августа 2026.</p>
+</div>
+
+</body>
+</html>

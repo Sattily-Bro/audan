@@ -1,0 +1,768 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Audan.kz — Главная, серия 2: пять супер-апп вариантов</title>
+</head>
+<body>
+
+<style>
+  /* ---------- Studio wrapper ---------- */
+  :root{
+    --bg:#EDECE7; --ink:#1B1B18; --muted:#6E6C64; --card:#FFFFFF; --line:#DEDCD4; --accent:#C05621;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#17181B; --ink:#ECEBE6; --muted:#96948C; --card:#1F2024; --line:#2E2F34; --accent:#F0975A; }
+  }
+  :root[data-theme="dark"]{ --bg:#17181B; --ink:#ECEBE6; --muted:#96948C; --card:#1F2024; --line:#2E2F34; --accent:#F0975A; }
+  :root[data-theme="light"]{ --bg:#EDECE7; --ink:#1B1B18; --muted:#6E6C64; --card:#FFFFFF; --line:#DEDCD4; --accent:#C05621; }
+
+  body{ background:var(--bg); color:var(--ink); font-family:var(--font); -webkit-font-smoothing:antialiased; margin:0; }
+  .wrap{ max-width:1440px; margin:0 auto; padding:56px 32px 80px; }
+  .kicker{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin:0 0 14px; }
+  h1{ font-size:clamp(28px,4vw,44px); line-height:1.08; letter-spacing:-.02em; margin:0 0 16px; text-wrap:balance; font-weight:800; }
+  .lede{ font-size:16px; line-height:1.55; color:var(--muted); max-width:66ch; margin:0 0 10px; }
+  .lede b{ color:var(--ink); font-weight:650; }
+
+  .rank{ margin:34px 0 8px; background:var(--card); border:1px solid var(--line); border-radius:16px; padding:20px 24px; max-width:760px; }
+  .rank h3{ margin:0 0 4px; font-size:15px; font-weight:800; }
+  .rank p{ margin:0 0 14px; font-size:13px; color:var(--muted); line-height:1.5; }
+  .rank ol{ margin:0; padding:0; list-style:none; display:flex; flex-wrap:wrap; gap:8px; counter-reset:r; }
+  .rank li{ counter-increment:r; font-size:13px; font-weight:650; background:var(--bg); border:1px solid var(--line); border-radius:999px; padding:7px 14px 7px 10px; display:flex; align-items:center; gap:8px; }
+  .rank li::before{ content:counter(r); width:20px; height:20px; border-radius:50%; background:var(--ink); color:var(--bg); font-size:11px; font-weight:800; display:flex; align-items:center; justify-content:center; }
+  .rank li span{ color:var(--muted); font-weight:550; }
+
+  .stage{ display:flex; flex-wrap:wrap; gap:52px 40px; justify-content:center; margin-top:52px; }
+  .slot{ width:min(392px,100%); display:flex; flex-direction:column; align-items:center; }
+  .phone{ width:min(392px,100%); border-radius:48px; background:#101013; padding:10px; box-shadow:0 24px 60px rgba(0,0,0,.30), 0 2px 8px rgba(0,0,0,.18); }
+  .screen{ border-radius:40px; overflow:hidden; height:800px; display:flex; flex-direction:column; background:#fff; font-family:var(--font); color:#191A16; position:relative; }
+  .app{ flex:1; overflow-y:auto; overscroll-behavior:contain; scrollbar-width:none; }
+  .app::-webkit-scrollbar{ display:none; }
+  .status{ display:flex; justify-content:space-between; align-items:center; padding:14px 26px 4px; font-size:13px; font-weight:650; }
+  .status .pins{ display:flex; gap:5px; }
+  .status i{ display:block; border-radius:2px; width:16px; height:9px; background:currentColor; opacity:.8; }
+  .status i+i{ width:22px; height:10px; opacity:.32; }
+
+  .caption{ margin-top:26px; width:100%; color:var(--ink); }
+  .caption .tag{ display:inline-block; font-size:11px; font-weight:800; letter-spacing:.1em; padding:4px 10px; border-radius:999px; margin-bottom:10px; }
+  .caption h2{ margin:0 0 6px; font-size:20px; font-weight:800; letter-spacing:-.01em; }
+  .caption .thesis{ margin:0 0 14px; font-size:14px; line-height:1.5; color:var(--muted); }
+  .caption ul{ margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:7px; }
+  .caption li{ font-size:13px; line-height:1.45; padding-left:18px; position:relative; }
+  .caption li::before{ content:""; position:absolute; left:2px; top:7px; width:6px; height:6px; border-radius:2px; background:currentColor; opacity:.5; }
+  .caption li.risk{ color:var(--muted); }
+  .caption li.risk::before{ border-radius:50%; background:none; border:1.5px solid currentColor; width:5px; height:5px; }
+
+  .verdict{ margin:72px auto 0; background:var(--card); border:1px solid var(--line); border-radius:20px; padding:32px 36px; max-width:860px; }
+  .verdict h2{ margin:0 0 14px; font-size:22px; font-weight:800; }
+  .verdict p{ margin:0 0 12px; font-size:15px; line-height:1.6; color:var(--muted); }
+  .verdict p b{ color:var(--ink); font-weight:650; }
+  .footnote{ text-align:center; margin-top:40px; font-size:12.5px; color:var(--muted); }
+
+  @media (prefers-reduced-motion: no-preference){
+    .slot{ animation:rise .6s ease both; }
+    .slot:nth-child(2){ animation-delay:.07s; } .slot:nth-child(3){ animation-delay:.14s; }
+    .slot:nth-child(4){ animation-delay:.21s; } .slot:nth-child(5){ animation-delay:.28s; }
+    @keyframes rise{ from{ opacity:0; transform:translateY(14px);} to{ opacity:1; transform:none;} }
+  }
+
+  /* ---------- Shared in-app ---------- */
+  .ic{ width:24px; height:24px; flex:none; }
+  .num{ font-variant-numeric:tabular-nums; }
+  .clamp2{ display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .hs{ display:flex; gap:10px; overflow-x:auto; scrollbar-width:none; }
+  .hs::-webkit-scrollbar{ display:none; }
+  .tabbar{ flex:none; display:flex; align-items:flex-end; padding:8px 10px 4px; border-top:1px solid rgba(25,26,22,.08); background:#fff; }
+  .tab{ flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; font-size:10.5px; font-weight:650; color:#9C9C98; padding:4px 0 2px; }
+  .tab .ic{ width:23px; height:23px; }
+  .homebar{ flex:none; display:flex; justify-content:center; padding:6px 0 8px; background:#fff; }
+  .homebar i{ width:120px; height:5px; border-radius:3px; background:#14140F; }
+  .ph{ background:linear-gradient(140deg,#EFE9DD,#DCD2BE); display:flex; align-items:center; justify-content:center; color:#B9AE96; }
+  .ph .ic{ width:24px; height:24px; }
+
+  /* colored icon chip — сквозной цвет сервиса во всех вариантах */
+  .chip{ border-radius:16px; display:flex; align-items:center; justify-content:center; position:relative; }
+  .c-ads{ background:#FEF0C7; color:#B54708; }   /* Объявления — янтарный */
+  .c-food{ background:#FFE4D5; color:#C4320A; }  /* Еда — тёплый оранж */
+  .c-job{ background:#D9E6FE; color:#1D4ED8; }   /* Работа — синий */
+  .c-gig{ background:#E6F4C7; color:#4D7C0F; }   /* Подработка — лайм */
+  .c-svc{ background:#EBE4FF; color:#6D28D9; }   /* Мастера — фиолет */
+  .c-map{ background:#CCF1EA; color:#0F766E; }   /* Карта — бирюза */
+  .c-feed{ background:#E0E4FF; color:#4338CA; }  /* Лента — индиго */
+  .c-geo{ background:#FCE1EE; color:#BE185D; }   /* Stories — розовый */
+
+  /* =================================================================
+     V6 — «Город» : иллюстрация, городская карточка, цветной грид
+  ================================================================== */
+  .v6 .screen{ background:#F6F7FB; }
+  .v6-sky{ position:relative; padding-bottom:0; }
+  .v6-sky svg.hero{ display:block; width:100%; height:216px; }
+  .v6-bar{ position:absolute; top:0; left:0; right:0; display:flex; align-items:center; justify-content:space-between; padding:12px 20px 0; }
+  .v6-logo{ font-size:22px; font-weight:850; letter-spacing:-.02em; color:#1B2A4A; }
+  .v6-logo b{ color:#E8630A; }
+  .v6-ava{ width:38px; height:38px; border-radius:50%; background:#FFD9A8; color:#8A4B08; font-weight:800; font-size:14px; display:flex; align-items:center; justify-content:center; border:2.5px solid #fff; box-shadow:0 2px 6px rgba(27,42,74,.18); }
+  .v6-search{ margin:-26px 20px 14px; position:relative; display:flex; align-items:center; gap:10px; background:#fff; border-radius:999px; padding:14px 18px; box-shadow:0 6px 20px rgba(27,42,74,.13); color:#8B8E98; font-size:14px; font-weight:550; }
+  .v6-search .ic{ width:19px; height:19px; }
+
+  .v6-city{ margin:0 20px 16px; background:#fff; border-radius:20px; padding:14px 16px; box-shadow:0 2px 10px rgba(27,42,74,.07); display:flex; align-items:center; }
+  .v6-city .wx{ flex:1; min-width:0; }
+  .v6-city .wx .a{ display:flex; align-items:center; gap:7px; font-size:17px; font-weight:800; letter-spacing:-.01em; }
+  .v6-city .wx .a .ic{ width:20px; height:20px; color:#E8930C; }
+  .v6-city .wx .b{ font-size:11.5px; color:#8B8E98; font-weight:600; margin-top:3px; }
+  .v6-qa{ display:flex; gap:14px; }
+  .v6-qa .q{ display:flex; flex-direction:column; align-items:center; gap:5px; font-size:10px; font-weight:700; color:#3A3D46; }
+  .v6-qa .q i{ width:40px; height:40px; border-radius:50%; background:#F2F3F8; display:flex; align-items:center; justify-content:center; color:#1B2A4A; }
+  .v6-qa .q i .ic{ width:18px; height:18px; }
+  .v6-qa .q:first-child i{ background:#E8630A; color:#fff; }
+
+  .v6-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px 6px; padding:2px 16px 6px; }
+  .v6-it{ display:flex; flex-direction:column; align-items:center; gap:6px; }
+  .v6-it .chip{ width:56px; height:56px; }
+  .v6-it .chip .ic{ width:27px; height:27px; }
+  .v6-it .chip em{ position:absolute; top:-4px; right:-6px; font-style:normal; background:#E8630A; color:#fff; font-size:9.5px; font-weight:800; border-radius:999px; padding:2px 6px; border:2px solid #F6F7FB; }
+  .v6-it span{ font-size:10.5px; font-weight:650; color:#3A3D46; text-align:center; }
+
+  .v6-promo{ margin:12px 20px 14px; border-radius:20px; background:linear-gradient(115deg,#FFF3E4,#FFE8CE 55%,#FFDDB6); padding:16px 18px; position:relative; overflow:hidden; }
+  .v6-promo .k{ font-size:11px; font-weight:800; letter-spacing:.08em; color:#B54708; }
+  .v6-promo h5{ margin:5px 0 4px; font-size:15.5px; line-height:1.3; font-weight:800; color:#3A2410; letter-spacing:-.01em; max-width:75%; }
+  .v6-promo p{ margin:0; font-size:12px; color:#8A6A45; font-weight:600; max-width:70%; }
+  .v6-promo svg.art{ position:absolute; right:-8px; bottom:-10px; width:96px; height:96px; }
+
+  .v6-h{ padding:2px 20px 10px; display:flex; align-items:baseline; justify-content:space-between; }
+  .v6-h h4{ margin:0; font-size:16.5px; font-weight:800; letter-spacing:-.01em; }
+  .v6-h a{ font-size:12.5px; font-weight:750; color:#E8630A; text-decoration:none; }
+  .v6-ads{ padding:0 20px 24px; }
+  .v6-ad{ flex:none; width:148px; background:#fff; border-radius:16px; overflow:hidden; box-shadow:0 2px 10px rgba(27,42,74,.07); }
+  .v6-ad .ph{ height:100px; }
+  .v6-ad .in{ padding:9px 11px 11px; }
+  .v6-ad .p{ font-size:14.5px; font-weight:800; letter-spacing:-.01em; }
+  .v6-ad .t{ font-size:11.5px; line-height:1.3; color:#6B6E78; margin-top:3px; height:30px; }
+  .v6 .tab.on{ color:#E8630A; }
+
+  /* =================================================================
+     V7 — «Бенто» : иерархия размеров = иерархия важности
+  ================================================================== */
+  .v7 .screen{ background:#F2F1EC; }
+  .v7-head{ display:flex; align-items:center; justify-content:space-between; padding:8px 20px 12px; }
+  .v7-logo{ font-size:21px; font-weight:850; letter-spacing:-.02em; }
+  .v7-logo b{ color:#C4320A; }
+  .v7-sub{ font-size:11.5px; color:#8C8A82; font-weight:650; margin-top:1px; }
+  .v7-lang{ display:flex; background:#E6E4DD; border-radius:11px; padding:3px; }
+  .v7-lang b{ font-size:11.5px; font-weight:750; padding:5px 11px; border-radius:8px; color:#75736B; }
+  .v7-lang b.on{ background:#fff; color:#191A16; box-shadow:0 1px 2px rgba(20,20,10,.12); }
+
+  .v7-bento{ display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:0 16px 16px; }
+  .bcard{ border-radius:20px; padding:14px 15px; position:relative; overflow:hidden; box-shadow:0 2px 8px rgba(30,28,20,.06); }
+  .bcard .bt{ display:flex; align-items:center; gap:8px; }
+  .bcard .bt .chip{ width:34px; height:34px; border-radius:11px; }
+  .bcard .bt .chip .ic{ width:17px; height:17px; }
+  .bcard .bt .n{ font-size:15px; font-weight:800; letter-spacing:-.01em; }
+  .bcard .bt .c{ font-size:11px; font-weight:650; color:#8C8A82; margin-top:1px; }
+  .b-ads{ grid-column:1 / -1; background:#fff; }
+  .b-ads .row{ display:flex; gap:10px; margin-top:12px; }
+  .b-ads .mini{ flex:1; border-radius:13px; background:#FAF8F2; padding:8px; }
+  .b-ads .mini .ph{ height:64px; border-radius:9px; }
+  .b-ads .mini .p{ font-size:13px; font-weight:800; margin-top:7px; }
+  .b-ads .mini .t{ font-size:10.5px; color:#75736B; margin-top:2px; line-height:1.3; height:27px; overflow:hidden; }
+  .b-food{ grid-column:1 / -1; background:#2A2118; color:#F7F1E8; }
+  .b-food .bt .n{ color:#fff; } .b-food .bt .c{ color:#B7A992; }
+  .b-food .status{ all:unset; display:flex; align-items:center; gap:9px; margin-top:12px; background:rgba(255,255,255,.09); border-radius:13px; padding:10px 12px; }
+  .b-food .status .dot{ width:8px; height:8px; border-radius:50%; background:#FFB35C; box-shadow:0 0 0 4px rgba(255,179,92,.18); }
+  .b-food .status .t{ font-size:12.5px; font-weight:700; }
+  .b-food .status .s{ font-size:10.5px; color:#B7A992; font-weight:600; margin-top:1px; }
+  .b-food .rest{ display:flex; gap:7px; margin-top:10px; }
+  .b-food .rest i{ flex:none; font-style:normal; font-size:11px; font-weight:700; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.14); border-radius:999px; padding:6px 11px; color:#EFE6D7; }
+  .bcard .big{ font-size:21px; font-weight:850; letter-spacing:-.02em; margin-top:10px; }
+  .bcard .sub{ font-size:11px; color:#8C8A82; font-weight:650; margin-top:2px; }
+  .b-job{ background:#fff; } .b-gig{ background:#fff; }
+  .b-map{ background:#0F766E; color:#fff; }
+  .b-map .bt .n{ color:#fff; } .b-map .bt .c{ color:#9BD8CF; }
+  .b-map .sub{ color:#9BD8CF; }
+  .b-map svg.mapart{ position:absolute; right:-14px; bottom:-16px; width:110px; height:110px; opacity:.5; }
+  .b-svc{ background:#fff; }
+  .b-svc .faces{ display:flex; margin-top:10px; }
+  .b-svc .faces i{ width:30px; height:30px; border-radius:50%; border:2px solid #fff; margin-left:-7px; font-style:normal; font-size:11px; font-weight:800; color:#fff; display:flex; align-items:center; justify-content:center; }
+  .b-svc .faces i:first-child{ margin-left:0; }
+  .b-feed{ grid-column:1 / -1; background:#fff; }
+  .b-feed .post{ display:flex; gap:9px; margin-top:11px; align-items:flex-start; }
+  .b-feed .av{ width:30px; height:30px; border-radius:50%; background:#5B8DEF; color:#fff; font-size:12px; font-weight:800; display:flex; align-items:center; justify-content:center; flex:none; }
+  .b-feed .tx{ font-size:12.5px; line-height:1.4; color:#3A3830; }
+  .b-feed .tx b{ font-weight:750; }
+  .b-geo{ background:linear-gradient(150deg,#BE185D,#9D174D); color:#fff; }
+  .b-geo .bt .chip{ background:rgba(255,255,255,.2); color:#fff; }
+  .b-geo .bt .n{ color:#fff; }
+  .b-geo .sub{ color:#F5B8D3; }
+  .v7 .tab.on{ color:#C4320A; }
+
+  /* =================================================================
+     V8 — «Маркет-лента» : рейл сервисов + живой контент, центр-«+»
+  ================================================================== */
+  .v8 .screen{ background:#FAF9F6; }
+  .v8-head{ display:flex; align-items:center; justify-content:space-between; padding:8px 20px 10px; }
+  .v8-logo{ font-size:21px; font-weight:850; letter-spacing:-.02em; }
+  .v8-logo b{ color:#B54708; }
+  .v8-bell{ position:relative; width:40px; height:40px; border-radius:50%; background:#fff; border:1px solid #ECE9E1; display:flex; align-items:center; justify-content:center; color:#3A3830; }
+  .v8-bell b{ position:absolute; top:8px; right:9px; width:8px; height:8px; border-radius:50%; background:#E5484D; border:2px solid #fff; }
+  .v8-search{ margin:0 20px 14px; display:flex; align-items:center; gap:10px; background:#fff; border:1.5px solid #E7E3D9; border-radius:14px; padding:12px 15px; color:#96938A; font-size:14px; font-weight:550; }
+  .v8-search .ic{ width:19px; height:19px; }
+  .v8-rail{ padding:0 20px 6px; }
+  .v8-svc{ flex:none; width:62px; display:flex; flex-direction:column; align-items:center; gap:6px; }
+  .v8-svc .chip{ width:50px; height:50px; border-radius:17px; }
+  .v8-svc .chip .ic{ width:24px; height:24px; }
+  .v8-svc span{ font-size:10px; font-weight:650; color:#3A3830; text-align:center; }
+  .v8-digest{ display:flex; gap:8px; padding:10px 20px 16px; overflow-x:auto; scrollbar-width:none; }
+  .v8-digest::-webkit-scrollbar{ display:none; }
+  .v8-chip{ flex:none; display:flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; color:#3A3830; background:#F1EEE6; border-radius:999px; padding:7px 12px; }
+  .v8-chip .ic{ width:13px; height:13px; color:#B54708; }
+  .v8-h{ padding:0 20px 10px; display:flex; align-items:baseline; justify-content:space-between; }
+  .v8-h h4{ margin:0; font-size:16.5px; font-weight:800; letter-spacing:-.01em; }
+  .v8-h span{ font-size:11.5px; color:#96938A; font-weight:650; }
+  .v8-feed{ display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:0 20px 24px; }
+  .v8-card{ background:#fff; border:1px solid #EEEBE3; border-radius:16px; overflow:hidden; }
+  .v8-card .ph{ height:110px; }
+  .v8-card .in{ padding:10px 12px 12px; }
+  .v8-card .p{ font-size:15px; font-weight:800; letter-spacing:-.01em; }
+  .v8-card .t{ font-size:11.5px; color:#6B6860; line-height:1.35; margin-top:3px; }
+  .v8-card .m{ font-size:10.5px; color:#A5A299; font-weight:650; margin-top:6px; }
+  .v8-k{ display:inline-flex; font-size:10px; font-weight:800; border-radius:6px; padding:3px 7px; margin-bottom:6px; }
+  .v8-job{ background:#fff; border:1px solid #EEEBE3; border-radius:16px; padding:12px 13px; }
+  .v8-job .zp{ font-size:16px; font-weight:850; letter-spacing:-.01em; color:#1D4ED8; }
+  .v8-job .t{ font-size:12px; font-weight:700; margin-top:3px; line-height:1.3; }
+  .v8-job .m{ font-size:10.5px; color:#A5A299; font-weight:650; margin-top:6px; }
+  .v8-dish{ background:#2A2118; border-radius:16px; padding:12px 13px; color:#F7F1E8; }
+  .v8-dish .k{ font-size:10px; font-weight:800; letter-spacing:.06em; color:#D8A15C; }
+  .v8-dish .t{ font-size:13px; font-weight:750; margin-top:4px; line-height:1.3; }
+  .v8-dish .p{ font-size:15px; font-weight:850; margin-top:6px; }
+  .v8-dish .btn{ margin-top:9px; background:#E8630A; border-radius:9px; text-align:center; font-size:11.5px; font-weight:800; padding:8px 0; color:#fff; }
+  .v8-post{ grid-column:1 / -1; background:#fff; border:1px solid #EEEBE3; border-radius:16px; padding:12px 14px; display:flex; gap:10px; }
+  .v8-post .av{ width:32px; height:32px; border-radius:50%; flex:none; background:#E08A3C; color:#fff; font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:center; }
+  .v8-post .tx{ font-size:12.5px; line-height:1.4; color:#3A3830; }
+  .v8-post .tx b{ font-weight:750; }
+  .v8 .tabbar{ position:relative; }
+  .v8 .tab.on{ color:#B54708; }
+  .v8-plus{ flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; font-size:10.5px; font-weight:700; color:#B54708; margin-top:-22px; }
+  .v8-plus i{ width:52px; height:52px; border-radius:50%; background:#E8630A; color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 16px rgba(232,99,10,.4), 0 0 0 5px #fff; }
+  .v8-plus i .ic{ width:24px; height:24px; }
+
+  /* =================================================================
+     V9 — «Персональный» : дела → частые → каталог группами
+  ================================================================== */
+  .v9 .screen{ background:#F4F4F6; }
+  .v9-hi{ padding:10px 20px 2px; display:flex; align-items:center; justify-content:space-between; }
+  .v9-hi .g .a{ font-size:20px; font-weight:850; letter-spacing:-.02em; }
+  .v9-hi .g .b{ font-size:12px; color:#84828A; font-weight:650; margin-top:2px; }
+  .v9-hi .g .b b{ color:#3D3B42; font-weight:750; }
+  .v9-ava{ width:44px; height:44px; border-radius:16px; background:#4338CA; color:#fff; font-weight:800; font-size:15px; display:flex; align-items:center; justify-content:center; }
+  .v9-lbl{ padding:16px 20px 9px; font-size:12.5px; font-weight:800; color:#84828A; letter-spacing:.06em; text-transform:uppercase; display:flex; justify-content:space-between; align-items:baseline; }
+  .v9-lbl i{ font-style:normal; font-size:10.5px; font-weight:650; letter-spacing:0; text-transform:none; color:#A6A4AC; }
+  .v9-do{ margin:0 20px 8px; display:flex; align-items:center; gap:12px; background:#fff; border-radius:16px; padding:12px 14px; box-shadow:0 1px 4px rgba(25,26,40,.05); }
+  .v9-do .chip{ width:40px; height:40px; border-radius:13px; flex:none; }
+  .v9-do .chip .ic{ width:19px; height:19px; }
+  .v9-do .t{ flex:1; min-width:0; }
+  .v9-do .n{ font-size:13.5px; font-weight:750; }
+  .v9-do .s{ font-size:11.5px; color:#84828A; font-weight:600; margin-top:1px; }
+  .v9-do .bar{ height:4px; border-radius:2px; background:#ECECEF; margin-top:7px; overflow:hidden; }
+  .v9-do .bar i{ display:block; height:100%; width:45%; border-radius:2px; background:#E8930C; }
+  .v9-fav{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; padding:0 20px; }
+  .v9-fc{ border-radius:18px; padding:13px 12px 12px; color:#fff; position:relative; overflow:hidden; min-height:96px; display:flex; flex-direction:column; justify-content:space-between; box-shadow:0 6px 16px rgba(25,26,40,.14); }
+  .v9-fc .ic{ width:24px; height:24px; }
+  .v9-fc .n{ font-size:13.5px; font-weight:800; letter-spacing:-.01em; line-height:1.15; }
+  .v9-fc .c{ font-size:10.5px; font-weight:650; opacity:.8; margin-top:2px; }
+  .v9-row{ margin:0 20px 8px; display:flex; align-items:center; gap:12px; background:#fff; border-radius:14px; padding:11px 13px; }
+  .v9-row .chip{ width:38px; height:38px; border-radius:12px; flex:none; }
+  .v9-row .chip .ic{ width:18px; height:18px; }
+  .v9-row .n{ flex:1; font-size:13.5px; font-weight:700; }
+  .v9-row .c{ font-size:11.5px; color:#84828A; font-weight:650; }
+  .v9-row .ic.ch{ width:16px; height:16px; color:#B9B7BE; }
+  .v9 .tab.on{ color:#4338CA; }
+
+  /* =================================================================
+     V10 — «Один экран» : нулевой скролл, всё видно сразу
+  ================================================================== */
+  .v10 .screen{ background:#FBFAF7; }
+  .v10 .app{ overflow:hidden; display:flex; flex-direction:column; }
+  .v10-head{ display:flex; align-items:center; justify-content:space-between; padding:6px 18px 8px; }
+  .v10-logo{ font-size:19px; font-weight:850; letter-spacing:-.02em; }
+  .v10-logo b{ color:#0F766E; }
+  .v10-lang{ display:flex; background:#EEEBE3; border-radius:10px; padding:2.5px; }
+  .v10-lang b{ font-size:11px; font-weight:750; padding:4.5px 10px; border-radius:8px; color:#75736B; }
+  .v10-lang b.on{ background:#fff; color:#191A16; box-shadow:0 1px 2px rgba(20,20,10,.12); }
+  .v10-strip{ display:flex; gap:7px; padding:0 18px 12px; }
+  .v10-st{ flex:1; display:flex; align-items:center; gap:7px; background:#fff; border:1px solid #ECE8DE; border-radius:12px; padding:9px 11px; }
+  .v10-st .ic{ width:16px; height:16px; flex:none; }
+  .v10-st .a{ font-size:12.5px; font-weight:800; letter-spacing:-.01em; }
+  .v10-st .b{ font-size:9.5px; color:#96938A; font-weight:650; }
+  .v10-verbs{ display:flex; gap:8px; padding:0 18px 14px; }
+  .v10-vb{ flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; border-radius:15px; padding:11px 6px 10px; font-size:11px; font-weight:750; }
+  .v10-vb .ic{ width:20px; height:20px; }
+  .v10-vb.a{ background:#0F766E; color:#fff; }
+  .v10-vb.b{ background:#fff; color:#191A16; border:1px solid #ECE8DE; }
+  .v10-vb.b .ic{ color:#0F766E; }
+  .v10-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px 6px; padding:0 14px 8px; }
+  .v10-it{ display:flex; flex-direction:column; align-items:center; gap:5px; }
+  .v10-it .chip{ width:54px; height:54px; border-radius:18px; }
+  .v10-it .chip .ic{ width:25px; height:25px; }
+  .v10-it .chip em{ position:absolute; top:-4px; right:-5px; font-style:normal; background:#0F766E; color:#fff; font-size:9px; font-weight:800; border-radius:999px; padding:2px 5.5px; border:2px solid #FBFAF7; }
+  .v10-it span{ font-size:10px; font-weight:650; color:#3A3830; text-align:center; }
+  .v10-tick{ margin:auto 18px 12px; background:#fff; border:1px solid #ECE8DE; border-radius:15px; overflow:hidden; }
+  .v10-tk{ display:flex; align-items:center; gap:9px; padding:10px 13px; }
+  .v10-tk+.v10-tk{ border-top:1px solid #F2EFE7; }
+  .v10-tk .k{ flex:none; font-size:9.5px; font-weight:800; letter-spacing:.05em; border-radius:6px; padding:3px 7px; }
+  .v10-tk .t{ flex:1; min-width:0; font-size:12px; font-weight:650; color:#3A3830; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .v10-tk .ic{ width:14px; height:14px; color:#B9B5AB; }
+  .v10 .tab.on{ color:#0F766E; }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- строчные — для таб-баров и служебных -->
+    <symbol id="s-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></symbol>
+    <symbol id="s-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+    <symbol id="s-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><circle cx="7" cy="7" r="1.2" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="s-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></symbol>
+    <symbol id="s-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+    <symbol id="s-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></symbol>
+    <symbol id="s-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></symbol>
+    <symbol id="s-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></symbol>
+    <symbol id="s-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="s-cam" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></symbol>
+    <symbol id="s-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M2 12h2.5M19.5 12H22M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></symbol>
+    <symbol id="s-drop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 2.7s6.8 7.3 6.8 11.5a6.8 6.8 0 01-13.6 0C5.2 10 12 2.7 12 2.7z"/></symbol>
+
+    <!-- заливные двухтонные — сервисы (цвет берут из .chip) -->
+    <symbol id="f-ads" viewBox="0 0 24 24"><path fill="currentColor" d="M12.6 2.6a2 2 0 011.4-.6H20a2 2 0 012 2v6a2 2 0 01-.6 1.4l-9 9a2 2 0 01-2.8 0L3.2 14a2 2 0 010-2.8l9.4-8.6z"/><circle cx="17" cy="7" r="1.9" fill="#fff"/></symbol>
+    <symbol id="f-food" viewBox="0 0 24 24"><path fill="currentColor" d="M3 11h18a1 1 0 011 1 8.5 8.5 0 01-6 7.6V21a1 1 0 01-1 1H9a1 1 0 01-1-1v-1.4A8.5 8.5 0 012 12a1 1 0 011-1z"/><path fill="currentColor" opacity=".55" d="M8.2 8.6c-.5-1.3.3-2 .3-3 0-.6-.2-1-.5-1.6h1.8c.4.6.6 1.1.6 1.7 0 1-.8 1.6-.3 2.9H8.2zm4.6 0c-.5-1.3.3-2 .3-3 0-.6-.2-1-.5-1.6h1.8c.4.6.6 1.1.6 1.7 0 1-.8 1.6-.3 2.9h-1.9z"/></symbol>
+    <symbol id="f-job" viewBox="0 0 24 24"><path fill="currentColor" d="M4 7h16a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V9a2 2 0 012-2z"/><path fill="currentColor" opacity=".5" d="M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2h-2V5h-2v2H9z"/><rect x="10" y="12" width="4" height="3" rx="1" fill="#fff"/></symbol>
+    <symbol id="f-gig" viewBox="0 0 24 24"><path fill="currentColor" d="M13.5 2L4 14.2h6.2L9.5 22 19 9.8h-6.2L13.5 2z"/></symbol>
+    <symbol id="f-svc" viewBox="0 0 24 24"><path fill="currentColor" d="M21.6 6.1a.8.8 0 00-1.3-.3l-2.6 2.6-2.1-2.1 2.6-2.6a.8.8 0 00-.3-1.3A6 6 0 0010 8.1L3.3 14.8a2.4 2.4 0 003.4 3.4l6.7-6.7a6 6 0 008.2-5.4z"/><circle cx="5" cy="16.5" r="1.3" fill="#fff"/></symbol>
+    <symbol id="f-map" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a8 8 0 018 8c0 5.4-6.1 10.9-7.3 11.9a1 1 0 01-1.4 0C10.1 20.9 4 15.4 4 10a8 8 0 018-8z"/><circle cx="12" cy="10" r="3" fill="#fff"/></symbol>
+    <symbol id="f-feed" viewBox="0 0 24 24"><path fill="currentColor" d="M12 3c5.5 0 10 3.6 10 8s-4.5 8-10 8c-1 0-2-.1-2.9-.3L4 21l1.5-3.6C3.4 15.9 2 13.6 2 11c0-4.4 4.5-8 10-8z"/><circle cx="8.5" cy="11" r="1.4" fill="#fff"/><circle cx="12.5" cy="11" r="1.4" fill="#fff"/><circle cx="16.5" cy="11" r="1.4" fill="#fff"/></symbol>
+    <symbol id="f-geo" viewBox="0 0 24 24"><path fill="currentColor" d="M20 6h-3l-1.4-2.1A2 2 0 0013.9 3h-3.8a2 2 0 00-1.7.9L7 6H4a2 2 0 00-2 2v11a2 2 0 002 2h16a2 2 0 002-2V8a2 2 0 00-2-2z"/><circle cx="12" cy="13.5" r="4.2" fill="#fff"/><circle cx="12" cy="13.5" r="2.1" fill="currentColor"/></symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <p class="kicker">Audan.kz · Concept 02 · Главная</p>
+  <h1>Серия 2: пять супер-апп вариантов</h1>
+  <p class="lede">Разбор обратной связи по первой серии: варианты были <b>«линейными и сухими»</b> — монохромные иконки, одинаковые сетки, один акцентный цвет. Здесь другой ход: <b>у каждого сервиса свой сквозной цвет</b> (как продукты внутри Kaspi), плитки несут живой контент, а не только иконку, появились иллюстрация и глубина.</p>
+  <p class="lede">Главный продуктовый принцип серии: <b>все 8 разделов присутствуют на первом экране</b>, а их вес (размер, позиция, контент внутри) убывает по важности.</p>
+
+  <div class="rank">
+    <h3>Рейтинг важности разделов</h3>
+    <p>Гипотеза из логики малого города: частота использования × ценность действия. Проверяется по таблице events, когда получим доступ к коду.</p>
+    <ol>
+      <li>Объявления <span>· деньги жителей</span></li>
+      <li>Доставка еды <span>· повторяемые заказы</span></li>
+      <li>Работа + Подработка <span>· жизненная потребность</span></li>
+      <li>Карта Шу <span>· справочник города</span></li>
+      <li>Мастера <span>· по потребности</span></li>
+      <li>Лента <span>· вовлечение</span></li>
+      <li>Stories <span>· развлечение</span></li>
+    </ol>
+  </div>
+
+  <div class="stage">
+
+    <!-- ============================ V6 «Город» ============================ -->
+    <div class="slot">
+      <div class="phone v6"><div class="screen">
+        <div class="app">
+          <div class="v6-sky">
+            <svg class="hero" viewBox="0 0 390 216" preserveAspectRatio="xMidYMax slice">
+              <defs>
+                <linearGradient id="g-sky" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#CFE4F7"/><stop offset="1" stop-color="#EFF6FD"/>
+                </linearGradient>
+              </defs>
+              <rect width="390" height="216" fill="url(#g-sky)"/>
+              <circle cx="322" cy="52" r="26" fill="#FFC94D"/>
+              <rect x="36" y="40" width="64" height="16" rx="8" fill="#fff" opacity=".85"/>
+              <rect x="210" y="26" width="48" height="13" rx="6.5" fill="#fff" opacity=".7"/>
+              <path d="M0 150 L70 96 L150 150 Z" fill="#AFC5DE"/>
+              <path d="M96 150 L180 78 L286 150 Z" fill="#93AECD"/>
+              <path d="M236 150 L316 104 L390 150 Z" fill="#AFC5DE"/>
+              <rect x="0" y="146" width="390" height="70" fill="#B6D39A"/>
+              <path d="M0 158 Q120 138 260 156 T390 150 L390 216 L0 216 Z" fill="#A3C784"/>
+              <rect x="28" y="112" width="46" height="46" rx="4" fill="#F1E4CF"/>
+              <rect x="34" y="120" width="10" height="10" fill="#8FB0D4"/><rect x="52" y="120" width="10" height="10" fill="#8FB0D4"/>
+              <rect x="34" y="138" width="10" height="10" fill="#8FB0D4"/><rect x="52" y="138" width="10" height="10" fill="#8FB0D4"/>
+              <rect x="24" y="104" width="54" height="10" rx="3" fill="#D97E4A"/>
+              <rect x="304" y="98" width="14" height="52" fill="#C9BBA4"/>
+              <ellipse cx="311" cy="94" rx="17" ry="12" fill="#8A9FB8"/>
+              <rect x="286" y="128" width="72" height="30" rx="4" fill="#E7DAC4"/>
+              <rect x="292" y="134" width="12" height="10" fill="#8FB0D4"/><rect x="310" y="134" width="12" height="10" fill="#8FB0D4"/><rect x="328" y="134" width="12" height="10" fill="#8FB0D4"/>
+              <rect x="0" y="176" width="390" height="4" fill="#6E6657"/>
+              <rect x="0" y="182" width="390" height="2" fill="#6E6657" opacity=".5"/>
+              <rect x="118" y="148" width="150" height="32" rx="7" fill="#3E6B8E"/>
+              <rect x="126" y="155" width="20" height="12" rx="2.5" fill="#DCEBF7"/><rect x="152" y="155" width="20" height="12" rx="2.5" fill="#DCEBF7"/><rect x="178" y="155" width="20" height="12" rx="2.5" fill="#DCEBF7"/><rect x="204" y="155" width="20" height="12" rx="2.5" fill="#DCEBF7"/><rect x="230" y="155" width="20" height="12" rx="2.5" fill="#DCEBF7"/>
+              <rect x="112" y="144" width="14" height="36" rx="4" fill="#35597A"/>
+              <circle cx="140" cy="181" r="6" fill="#22384D"/><circle cx="172" cy="181" r="6" fill="#22384D"/><circle cx="216" cy="181" r="6" fill="#22384D"/><circle cx="248" cy="181" r="6" fill="#22384D"/>
+            </svg>
+            <div class="v6-bar">
+              <div class="status" style="position:absolute;left:0;right:0;top:0;color:#1B2A4A"><span>9:41</span><span class="pins"><i></i><i></i></span></div>
+              <div style="margin-top:26px" class="v6-logo">Audan<b>.</b></div>
+              <div style="margin-top:26px" class="v6-ava">АС</div>
+            </div>
+          </div>
+          <div class="v6-search"><svg class="ic"><use href="#s-search"/></svg>Найти: товар, мастера, кафе…</div>
+
+          <div class="v6-city">
+            <div class="wx">
+              <div class="a"><svg class="ic"><use href="#s-sun"/></svg>+34° <span style="font-weight:600;color:#8B8E98;font-size:12px">Шу қаласы</span></div>
+              <div class="b num">АИ-92 от 195 ₸ · доллар 543 ₸</div>
+            </div>
+            <div class="v6-qa">
+              <div class="q"><i><svg class="ic"><use href="#s-plus"/></svg></i>Продать</div>
+              <div class="q"><i><svg class="ic"><use href="#f-food"/></svg></i>Еда</div>
+              <div class="q"><i><svg class="ic"><use href="#s-search"/></svg></i>Работа</div>
+            </div>
+          </div>
+
+          <div class="v6-grid">
+            <div class="v6-it"><div class="chip c-ads"><svg class="ic"><use href="#f-ads"/></svg><em>29</em></div><span>Объявления</span></div>
+            <div class="v6-it"><div class="chip c-food"><svg class="ic"><use href="#f-food"/></svg></div><span>Еда</span></div>
+            <div class="v6-it"><div class="chip c-job"><svg class="ic"><use href="#f-job"/></svg><em>12</em></div><span>Работа</span></div>
+            <div class="v6-it"><div class="chip c-gig"><svg class="ic"><use href="#f-gig"/></svg></div><span>Подработка</span></div>
+            <div class="v6-it"><div class="chip c-map"><svg class="ic"><use href="#f-map"/></svg></div><span>Карта Шу</span></div>
+            <div class="v6-it"><div class="chip c-svc"><svg class="ic"><use href="#f-svc"/></svg></div><span>Мастера</span></div>
+            <div class="v6-it"><div class="chip c-feed"><svg class="ic"><use href="#f-feed"/></svg><em>5</em></div><span>Лента</span></div>
+            <div class="v6-it"><div class="chip c-geo"><svg class="ic"><use href="#f-geo"/></svg></div><span>Stories</span></div>
+          </div>
+
+          <div class="v6-promo">
+            <div class="k">НОВОСТИ ШУ</div>
+            <h5>42 канала реконструируют — орошение улучшится на 31 тыс. га</h5>
+            <p>Проект завершат до конца 2027 года</p>
+            <svg class="art" viewBox="0 0 96 96"><circle cx="60" cy="60" r="34" fill="#F5B461" opacity=".55"/><path d="M28 78 Q48 40 84 52" stroke="#D97E4A" stroke-width="7" fill="none" stroke-linecap="round"/><circle cx="30" cy="76" r="9" fill="#3E6B8E"/></svg>
+          </div>
+
+          <div class="v6-h"><h4>Свежее на базаре</h4><a>Все 29 →</a></div>
+          <div class="hs v6-ads">
+            <div class="v6-ad"><div class="ph"><svg class="ic"><use href="#s-cam"/></svg></div><div class="in"><div class="p num">25 000 000 ₸</div><div class="t clamp2">Дом, 170 м², гараж, баня</div></div></div>
+            <div class="v6-ad"><div class="ph" style="background:linear-gradient(140deg,#E4E9E0,#CBD5C5)"><svg class="ic"><use href="#s-cam"/></svg></div><div class="in"><div class="p num">50 000 ₸</div><div class="t clamp2">Двухъярусная кровать, новая</div></div></div>
+            <div class="v6-ad"><div class="ph" style="background:linear-gradient(140deg,#EAE2D8,#D8C9B6)"><svg class="ic"><use href="#s-cam"/></svg></div><div class="in"><div class="p num">20 000 ₸</div><div class="t clamp2">Катушки свечей, Mercedes</div></div></div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab on"><svg class="ic"><use href="#s-home"/></svg>Главная</div>
+          <div class="tab"><svg class="ic"><use href="#s-map"/></svg>Карта</div>
+          <div class="tab"><svg class="ic"><use href="#s-tag"/></svg>Базар</div>
+          <div class="tab"><svg class="ic"><use href="#s-chat"/></svg>Лента</div>
+          <div class="tab"><svg class="ic"><use href="#s-user"/></svg>Профиль</div>
+        </div>
+        <div class="homebar"><i></i></div>
+      </div></div>
+      <div class="caption">
+        <span class="tag" style="background:#FFE8CE;color:#B54708">Вариант 6</span>
+        <h2>«Город» — иллюстрация и тепло</h2>
+        <p class="thesis">Ответ на «сухость» первой серии: рисованный Шу в шапке (степь, горы, поезд — город-то узловая станция), городская карточка вместо кошелька, цветные сервисы, промо-карточка с графикой.</p>
+        <ul>
+          <li>Иллюстрация даёт то, чего нет ни у одного конкурента в нише, — собственное лицо.</li>
+          <li>Городская карточка (погода · бензин · доллар) — ежедневный повод открыть приложение, аналог баланса в супер-аппах.</li>
+          <li>Быстрые действия «Продать / Еда / Работа» — как Pay/Top Up в кошельке: топ-3 сценария в один тап.</li>
+          <li class="risk">Риск: иллюстрация требует качественной отрисовки — плохая сделает хуже, чем никакая.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ============================ V7 «Бенто» ============================ -->
+    <div class="slot">
+      <div class="phone v7"><div class="screen">
+        <div class="app">
+          <div class="status"><span>9:41</span><span class="pins"><i></i><i></i></span></div>
+          <div class="v7-head">
+            <div><div class="v7-logo">Audan<b>.</b></div><div class="v7-sub">Шу қаласы · +34°</div></div>
+            <div class="v7-lang"><b>ҚАЗ</b><b class="on">РУС</b></div>
+          </div>
+
+          <div class="v7-bento">
+            <div class="bcard b-ads">
+              <div class="bt"><div class="chip c-ads"><svg class="ic"><use href="#f-ads"/></svg></div><div><div class="n">Объявления</div><div class="c">29 свежих сегодня</div></div></div>
+              <div class="row">
+                <div class="mini"><div class="ph"><svg class="ic" style="width:18px;height:18px"><use href="#s-cam"/></svg></div><div class="p num">25 000 000 ₸</div><div class="t">Дом, 170 м², гараж</div></div>
+                <div class="mini"><div class="ph" style="background:linear-gradient(140deg,#E4E9E0,#CBD5C5)"><svg class="ic" style="width:18px;height:18px"><use href="#s-cam"/></svg></div><div class="p num">50 000 ₸</div><div class="t">Кровать двухъярусная</div></div>
+                <div class="mini"><div class="ph" style="background:linear-gradient(140deg,#EAE2D8,#D8C9B6)"><svg class="ic" style="width:18px;height:18px"><use href="#s-cam"/></svg></div><div class="p num">20 000 ₸</div><div class="t">Катушки, Mercedes</div></div>
+              </div>
+            </div>
+
+            <div class="bcard b-food">
+              <div class="bt"><div class="chip c-food"><svg class="ic"><use href="#f-food"/></svg></div><div><div class="n">Доставка еды</div><div class="c">6 заведений открыто</div></div></div>
+              <div class="status"><span class="dot"></span><div><div class="t">Заказ №14 готовится</div><div class="s">Аружан кафе · ~40 мин</div></div></div>
+              <div class="rest"><i>Аружан</i><i>Дастархан</i><i>Самса-центр</i><i>+3</i></div>
+            </div>
+
+            <div class="bcard b-job">
+              <div class="bt"><div class="chip c-job"><svg class="ic"><use href="#f-job"/></svg></div><div class="n">Работа</div></div>
+              <div class="big num">12</div><div class="sub">вакансий · Биотех набирает</div>
+            </div>
+            <div class="bcard b-gig">
+              <div class="bt"><div class="chip c-gig"><svg class="ic"><use href="#f-gig"/></svg></div><div class="n">Подработка</div></div>
+              <div class="big num">8</div><div class="sub">заданий · от 5 000 ₸</div>
+            </div>
+
+            <div class="bcard b-map">
+              <div class="bt"><div class="chip" style="background:rgba(255,255,255,.18);color:#fff"><svg class="ic"><use href="#f-map"/></svg></div><div class="n">Карта Шу</div></div>
+              <div class="big num">214</div><div class="sub">мест · 31 открыто сейчас</div>
+              <svg class="mapart" viewBox="0 0 110 110"><path d="M8 90 Q40 60 60 80 T108 50" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round"/><circle cx="60" cy="80" r="9" fill="#fff"/><circle cx="98" cy="54" r="6" fill="#fff" opacity=".6"/></svg>
+            </div>
+            <div class="bcard b-svc">
+              <div class="bt"><div class="chip c-svc"><svg class="ic"><use href="#f-svc"/></svg></div><div class="n">Мастера</div></div>
+              <div class="faces"><i style="background:#7C3AED">Б</i><i style="background:#2563EB">Н</i><i style="background:#0D9488">С</i><i style="background:#B45309">+28</i></div>
+              <div class="sub" style="margin-top:8px">электрики, сантехники, стройка</div>
+            </div>
+
+            <div class="bcard b-feed">
+              <div class="bt"><div class="chip c-feed"><svg class="ic"><use href="#f-feed"/></svg></div><div><div class="n">Лента города</div><div class="c">5 новых постов</div></div></div>
+              <div class="post"><div class="av">Б</div><div class="tx"><b>Балнур:</b> кушти сайт шу каласына👍 <span style="color:#8C8A82">· 2 дн · 1 ❤</span></div></div>
+            </div>
+
+            <div class="bcard b-geo" style="grid-column:1 / -1; display:flex; align-items:center; gap:12px; padding:13px 15px;">
+              <div class="chip" style="width:38px;height:38px;background:rgba(255,255,255,.2);color:#fff"><svg class="ic" style="width:19px;height:19px"><use href="#f-geo"/></svg></div>
+              <div style="flex:1"><div class="n" style="font-size:15px;font-weight:800">Audan Stories</div><div class="sub" style="margin:0">Фото дня уже выбрано — посмотрите</div></div>
+              <svg class="ic" style="width:18px;height:18px;opacity:.8"><use href="#s-chev"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab on"><svg class="ic"><use href="#s-home"/></svg>Главная</div>
+          <div class="tab"><svg class="ic"><use href="#s-map"/></svg>Карта</div>
+          <div class="tab"><svg class="ic"><use href="#s-tag"/></svg>Базар</div>
+          <div class="tab"><svg class="ic"><use href="#s-chat"/></svg>Лента</div>
+          <div class="tab"><svg class="ic"><use href="#s-user"/></svg>Профиль</div>
+        </div>
+        <div class="homebar"><i></i></div>
+      </div></div>
+      <div class="caption">
+        <span class="tag" style="background:#FFE4D5;color:#C4320A">Вариант 7</span>
+        <h2>«Бенто» — размер = важность</h2>
+        <p class="thesis">Самый прямой ответ на бриф: все 8 разделов на экране, вес каждой карточки пропорционален месту в рейтинге. Каждая плитка — живой виджет с контентом, а не кнопка с иконкой.</p>
+        <ul>
+          <li>Объявления — самая большая карточка и сразу с товарами: главный сценарий получает главный вес.</li>
+          <li>Статус заказа живёт прямо в карточке «Еда» — состояние встроено в навигацию.</li>
+          <li>Тёмные акцентные карточки (Еда, Карта) ломают монотонность сетки — никакой «линейности».</li>
+          <li class="risk">Риск: плотный экран — надо жёстко следить за иерархией, иначе превратится в базар без ранжира.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ============================ V8 «Маркет-лента» ============================ -->
+    <div class="slot">
+      <div class="phone v8"><div class="screen">
+        <div class="app">
+          <div class="status"><span>9:41</span><span class="pins"><i></i><i></i></span></div>
+          <div class="v8-head">
+            <div class="v8-logo">Audan<b>.</b></div>
+            <div class="v8-bell"><svg class="ic" style="width:19px;height:19px"><use href="#s-bell"/></svg><b></b></div>
+          </div>
+          <div class="v8-search"><svg class="ic"><use href="#s-search"/></svg>Поиск по всему Шу</div>
+
+          <div class="hs v8-rail">
+            <div class="v8-svc"><div class="chip c-ads"><svg class="ic"><use href="#f-ads"/></svg></div><span>Базар</span></div>
+            <div class="v8-svc"><div class="chip c-food"><svg class="ic"><use href="#f-food"/></svg></div><span>Еда</span></div>
+            <div class="v8-svc"><div class="chip c-job"><svg class="ic"><use href="#f-job"/></svg></div><span>Работа</span></div>
+            <div class="v8-svc"><div class="chip c-gig"><svg class="ic"><use href="#f-gig"/></svg></div><span>Шабашка</span></div>
+            <div class="v8-svc"><div class="chip c-map"><svg class="ic"><use href="#f-map"/></svg></div><span>Карта</span></div>
+            <div class="v8-svc"><div class="chip c-svc"><svg class="ic"><use href="#f-svc"/></svg></div><span>Мастера</span></div>
+            <div class="v8-svc"><div class="chip c-feed"><svg class="ic"><use href="#f-feed"/></svg></div><span>Лента</span></div>
+            <div class="v8-svc"><div class="chip c-geo"><svg class="ic"><use href="#f-geo"/></svg></div><span>Stories</span></div>
+          </div>
+
+          <div class="v8-digest">
+            <div class="v8-chip"><svg class="ic"><use href="#s-sun"/></svg>+34°</div>
+            <div class="v8-chip"><svg class="ic"><use href="#s-drop"/></svg><span class="num">АИ-92 · 195 ₸</span></div>
+            <div class="v8-chip"><svg class="ic"><use href="#s-chat"/></svg>5 постов</div>
+            <div class="v8-chip"><svg class="ic"><use href="#s-tag"/></svg>29 свежих</div>
+          </div>
+
+          <div class="v8-h"><h4>Живая лента Шу</h4><span>обновлено только что</span></div>
+          <div class="v8-feed">
+            <div class="v8-card">
+              <div class="ph"><svg class="ic"><use href="#s-cam"/></svg></div>
+              <div class="in"><span class="v8-k" style="background:#FEF0C7;color:#B54708">ПРОДАЖА</span><div class="p num">25 000 000 ₸</div><div class="t clamp2">Дом, 170 м², гараж, баня, сад</div><div class="m">Шу қаласы · вчера</div></div>
+            </div>
+            <div class="v8-job">
+              <span class="v8-k" style="background:#D9E6FE;color:#1D4ED8">ВАКАНСИЯ</span>
+              <div class="zp num">от 250 000 ₸</div>
+              <div class="t">Оператор линии, Биотех — Индустриальная зона</div>
+              <div class="m">полный день · 3 места</div>
+            </div>
+            <div class="v8-dish">
+              <div class="k">АРУЖАН КАФЕ · 25–40 МИН</div>
+              <div class="t">Лагман по-домашнему</div>
+              <div class="p num">1 400 ₸</div>
+              <div class="btn">Заказать</div>
+            </div>
+            <div class="v8-card">
+              <div class="ph" style="background:linear-gradient(140deg,#E4E9E0,#CBD5C5)"><svg class="ic"><use href="#s-cam"/></svg></div>
+              <div class="in"><span class="v8-k" style="background:#FEF0C7;color:#B54708">ПРОДАЖА</span><div class="p num">50 000 ₸</div><div class="t clamp2">Двухъярусная кровать, почти новая</div><div class="m">Шу қаласы · вчера</div></div>
+            </div>
+            <div class="v8-post">
+              <div class="av">Е</div>
+              <div class="tx"><b>Еко</b> в Ленте: Ооо😍😍 жақсы сайт ашылыпты күшті🥳🥳 бәрі бар екен… <span style="color:#A5A299">· 2 ❤ · 1 ответ</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab on"><svg class="ic"><use href="#s-home"/></svg>Главная</div>
+          <div class="tab"><svg class="ic"><use href="#s-map"/></svg>Карта</div>
+          <div class="v8-plus"><i><svg class="ic"><use href="#s-plus"/></svg></i>Продать</div>
+          <div class="tab"><svg class="ic"><use href="#s-chat"/></svg>Лента</div>
+          <div class="tab"><svg class="ic"><use href="#s-user"/></svg>Профиль</div>
+        </div>
+        <div class="homebar"><i></i></div>
+      </div></div>
+      <div class="caption">
+        <span class="tag" style="background:#FEF0C7;color:#B54708">Вариант 8</span>
+        <h2>«Маркет-лента» — контент и есть навигация</h2>
+        <p class="thesis">Все сервисы — компактным рейлом сверху, дальше экран отдан смешанной живой ленте: объявление, вакансия с зарплатой, блюдо с кнопкой «Заказать», пост. Центральная кнопка таб-бара — «Продать».</p>
+        <ul>
+          <li>Смешанная лента показывает пульс всего города за один скролл — сильнейшее удержание.</li>
+          <li>«Продать» в центре таб-бара — приоритет №1 закреплён в самом дорогом месте интерфейса.</li>
+          <li>Типы карточек различаются формой и цветом — лента читается без чтения.</li>
+          <li class="risk">Риск: рецепт смешивания ленты нужно настраивать — без правил она станет шумом.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ============================ V9 «Персональный» ============================ -->
+    <div class="slot">
+      <div class="phone v9"><div class="screen">
+        <div class="app">
+          <div class="status"><span>9:41</span><span class="pins"><i></i><i></i></span></div>
+          <div class="v9-hi">
+            <div class="g"><div class="a">Қайырлы таң, Аружан!</div><div class="b">Шу қаласы · <b>+34°, солнечно</b> · АИ-92 <b class="num">195 ₸</b></div></div>
+            <div class="v9-ava">АС</div>
+          </div>
+
+          <div class="v9-lbl">Ваши дела</div>
+          <div class="v9-do">
+            <div class="chip c-food"><svg class="ic"><use href="#f-food"/></svg></div>
+            <div class="t"><div class="n">Заказ №14 готовится</div><div class="s">Аружан кафе · ~40 мин</div><div class="bar"><i></i></div></div>
+          </div>
+          <div class="v9-do">
+            <div class="chip c-ads"><svg class="ic"><use href="#f-ads"/></svg></div>
+            <div class="t"><div class="n">Дом, 170 м² — на сайте</div><div class="s">47 просмотров · 3 в избранном</div></div>
+            <svg class="ic" style="width:16px;height:16px;color:#B9B7BE"><use href="#s-chev"/></svg>
+          </div>
+
+          <div class="v9-lbl">Ваши частые <i>порядок подстраивается под вас</i></div>
+          <div class="v9-fav">
+            <div class="v9-fc" style="background:linear-gradient(150deg,#C4320A,#9A3412)">
+              <svg class="ic"><use href="#f-food"/></svg>
+              <div><div class="n">Еда</div><div class="c">заказывали 6 раз</div></div>
+            </div>
+            <div class="v9-fc" style="background:linear-gradient(150deg,#B45309,#92400E)">
+              <svg class="ic"><use href="#f-ads"/></svg>
+              <div><div class="n">Базар</div><div class="c">29 свежих</div></div>
+            </div>
+            <div class="v9-fc" style="background:linear-gradient(150deg,#4338CA,#3730A3)">
+              <svg class="ic"><use href="#f-feed"/></svg>
+              <div><div class="n">Лента</div><div class="c">5 новых</div></div>
+            </div>
+          </div>
+
+          <div class="v9-lbl">Работа и заработок</div>
+          <div class="v9-row"><div class="chip c-job"><svg class="ic"><use href="#f-job"/></svg></div><div class="n">Работа</div><div class="c num">12 вакансий</div><svg class="ic ch"><use href="#s-chev"/></svg></div>
+          <div class="v9-row"><div class="chip c-gig"><svg class="ic"><use href="#f-gig"/></svg></div><div class="n">Подработка</div><div class="c num">8 заданий</div><svg class="ic ch"><use href="#s-chev"/></svg></div>
+          <div class="v9-row"><div class="chip c-svc"><svg class="ic"><use href="#f-svc"/></svg></div><div class="n">Мастера и услуги</div><div class="c num">31 анкета</div><svg class="ic ch"><use href="#s-chev"/></svg></div>
+
+          <div class="v9-lbl">Город</div>
+          <div class="v9-row"><div class="chip c-map"><svg class="ic"><use href="#f-map"/></svg></div><div class="n">Карта Шу</div><div class="c num">214 мест</div><svg class="ic ch"><use href="#s-chev"/></svg></div>
+          <div class="v9-row" style="margin-bottom:24px"><div class="chip c-geo"><svg class="ic"><use href="#f-geo"/></svg></div><div class="n">Audan Stories</div><div class="c">фото дня</div><svg class="ic ch"><use href="#s-chev"/></svg></div>
+        </div>
+        <div class="tabbar">
+          <div class="tab on"><svg class="ic"><use href="#s-home"/></svg>Главная</div>
+          <div class="tab"><svg class="ic"><use href="#s-map"/></svg>Карта</div>
+          <div class="tab"><svg class="ic"><use href="#s-tag"/></svg>Базар</div>
+          <div class="tab"><svg class="ic"><use href="#s-chat"/></svg>Лента</div>
+          <div class="tab"><svg class="ic"><use href="#s-user"/></svg>Профиль</div>
+        </div>
+        <div class="homebar"><i></i></div>
+      </div></div>
+      <div class="caption">
+        <span class="tag" style="background:#E0E4FF;color:#4338CA">Вариант 9</span>
+        <h2>«Персональный» — важность у каждого своя</h2>
+        <p class="thesis">Рейтинг разделов не фиксирован, а вычисляется: «Ваши частые» сортируются по событиям пользователя (events уже пишутся в БД). Сверху — дела со статусами, ниже — полный каталог смысловыми группами.</p>
+        <ul>
+          <li>Продавец видит «Базар» первым, гурман — «Еду»: одна главная работает на всех.</li>
+          <li>Прогресс-бар заказа прямо в списке дел — статус без единого тапа.</li>
+          <li>Группы «Работа и заработок» / «Город» — понятная ментальная модель вместо ровной сетки.</li>
+          <li class="risk">Риск: перестановки могут дезориентировать — порядок менять не чаще раза в день и только в блоке «частые».</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ============================ V10 «Один экран» ============================ -->
+    <div class="slot">
+      <div class="phone v10"><div class="screen">
+        <div class="app">
+          <div class="status"><span>9:41</span><span class="pins"><i></i><i></i></span></div>
+          <div class="v10-head">
+            <div class="v10-logo">Audan<b>.</b></div>
+            <div class="v10-lang"><b>ҚАЗ</b><b class="on">РУС</b></div>
+          </div>
+          <div class="v10-strip">
+            <div class="v10-st"><svg class="ic" style="color:#E8930C"><use href="#s-sun"/></svg><div><div class="a">+34°</div><div class="b">солнечно</div></div></div>
+            <div class="v10-st"><svg class="ic" style="color:#0F766E"><use href="#s-drop"/></svg><div><div class="a num">195 ₸</div><div class="b">АИ-92 · Helios</div></div></div>
+            <div class="v10-st"><svg class="ic" style="color:#4338CA"><use href="#s-chat"/></svg><div><div class="a num">5</div><div class="b">новых постов</div></div></div>
+          </div>
+          <div class="v10-verbs">
+            <div class="v10-vb a"><svg class="ic"><use href="#s-plus"/></svg>Продать</div>
+            <div class="v10-vb b"><svg class="ic"><use href="#f-food"/></svg>Заказать еду</div>
+            <div class="v10-vb b"><svg class="ic"><use href="#f-job"/></svg>Найти работу</div>
+          </div>
+
+          <div class="v10-grid">
+            <div class="v10-it"><div class="chip c-ads"><svg class="ic"><use href="#f-ads"/></svg><em>29</em></div><span>Объявления</span></div>
+            <div class="v10-it"><div class="chip c-food"><svg class="ic"><use href="#f-food"/></svg></div><span>Еда</span></div>
+            <div class="v10-it"><div class="chip c-job"><svg class="ic"><use href="#f-job"/></svg><em>12</em></div><span>Работа</span></div>
+            <div class="v10-it"><div class="chip c-gig"><svg class="ic"><use href="#f-gig"/></svg><em>8</em></div><span>Подработка</span></div>
+            <div class="v10-it"><div class="chip c-map"><svg class="ic"><use href="#f-map"/></svg></div><span>Карта Шу</span></div>
+            <div class="v10-it"><div class="chip c-svc"><svg class="ic"><use href="#f-svc"/></svg></div><span>Мастера</span></div>
+            <div class="v10-it"><div class="chip c-feed"><svg class="ic"><use href="#f-feed"/></svg><em>5</em></div><span>Лента</span></div>
+            <div class="v10-it"><div class="chip c-geo"><svg class="ic"><use href="#f-geo"/></svg></div><span>Stories</span></div>
+          </div>
+
+          <div class="v10-tick">
+            <div class="v10-tk"><span class="k" style="background:#FEF0C7;color:#B54708">БАЗАР</span><span class="t num">Дом 170 м² — 25 000 000 ₸ · свежее</span><svg class="ic"><use href="#s-chev"/></svg></div>
+            <div class="v10-tk"><span class="k" style="background:#D9E6FE;color:#1D4ED8">РАБОТА</span><span class="t num">Оператор линии, Биотех — от 250 000 ₸</span><svg class="ic"><use href="#s-chev"/></svg></div>
+            <div class="v10-tk"><span class="k" style="background:#CCF1EA;color:#0F766E">НОВОСТИ</span><span class="t">42 канала реконструируют в районе</span><svg class="ic"><use href="#s-chev"/></svg></div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab on"><svg class="ic"><use href="#s-home"/></svg>Главная</div>
+          <div class="tab"><svg class="ic"><use href="#s-map"/></svg>Карта</div>
+          <div class="tab"><svg class="ic"><use href="#s-tag"/></svg>Базар</div>
+          <div class="tab"><svg class="ic"><use href="#s-chat"/></svg>Лента</div>
+          <div class="tab"><svg class="ic"><use href="#s-user"/></svg>Профиль</div>
+        </div>
+        <div class="homebar"><i></i></div>
+      </div></div>
+      <div class="caption">
+        <span class="tag" style="background:#CCF1EA;color:#0F766E">Вариант 10</span>
+        <h2>«Один экран» — ноль скролла</h2>
+        <p class="thesis">Вся главная помещается в экран целиком: виджеты-строка, три действия, все 8 сервисов, тикер живого контента. Ничего не спрятано ниже сгиба — потому что сгиба нет.</p>
+        <ul>
+          <li>Для наименее цифровой части аудитории скролл — барьер; здесь его просто нет.</li>
+          <li>Тикер из трёх строк отдаёт пульс города (базар · работа · новости) без ленты.</li>
+          <li>Самый быстрый экран из всех: ни одной фотографии — мгновенная загрузка на любом интернете.</li>
+          <li class="risk">Риск: жёсткий лимит площади — каждый новый сервис потребует пересборки экрана.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="verdict">
+    <h2>Рекомендация студии — серия 2</h2>
+    <p><b>Фаворит — Вариант 7 «Бенто»</b>: он единственный буквально исполняет принцип «все разделы по убыванию важности» и при этом каждая карточка живая. Это самостоятельный характер, не калька с Kaspi и не сухая сетка.</p>
+    <p>Пара к нему — <b>шапка из Варианта 6</b>: иллюстрированный Шу и городская карточка дают тепло и ежедневный крючок, бенто ниже даёт структуру. Вместе это законченная главная.</p>
+    <p><b>Вариант 9</b> — правильная вторая итерация после запуска: когда накопятся events, блок «частые» можно включить поверх любой основы. <b>Вариант 8</b> проверяем позже как эксперимент вовлечения, <b>Вариант 10</b> — держим как «лайт-режим» для слабых устройств (это может быть настройка, а не отдельный продукт).</p>
+  </div>
+
+  <p class="footnote">Прототипы: шрифт системный (финальный — гротеск с полной кириллицей на этапе токенов); фото — плейсхолдеры, живые подтянутся из API; иллюстрация шапки — черновая, финальная рисуется отдельно. Данные реальные: raion.kz, 9 августа 2026. Сквозные цвета сервисов едины во всех пяти вариантах.</p>
+</div>
+
+</body>
+</html>

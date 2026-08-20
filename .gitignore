@@ -1,0 +1,14 @@
+# приватный репо заказчика — живёт отдельным клоном, не коммитится сюда
+raion-handoff/
+
+node_modules/
+app/dist/
+*.tsbuildinfo
+.DS_Store
+.claude/
+
+# генерируемые выдачи дизайна (пересобираются: build.py, export_png.py)
+design/screens-png/
+design/audan-screens-png.zip
+design/audan-screens-v12.pdf
+design/.png-export/

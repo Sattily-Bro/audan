@@ -1,0 +1,54 @@
+@import 'tailwindcss';
+
+/* ===== Дизайн-токены Audan.kz (источник: design/src/audan-screens.html) =====
+   Палитра НЕ финализирована: 13 кандидатов в src/theme/palettes.ts, дефолт «Кобальт».
+   Акцент всегда через var(--acc*), чтобы смена палитры была одной операцией. */
+:root {
+  --acc: #2450d8;
+  --acc-d: #1b3ea8;
+  --acc-l: #6e8ff0;
+  --acc-bg: #e7edfd;
+  --acc-h: #2e5ce8;
+  --acc-sel: #1a2440;
+  --acc-rgb: 36, 80, 216;
+}
+
+@theme {
+  --font-sans: 'Inter Variable', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+
+  /* нейтрали — намеренно тёплые */
+  --color-paper: #f7f6f2;   /* фон экрана */
+  --color-card: #ffffff;
+  --color-ink: #1a1916;     /* основной текст */
+  --color-mut: #8b887f;     /* вторичный текст */
+  --color-faint: #aba79d;   /* плейсхолдеры */
+  --color-line: #e2ded5;    /* бордеры */
+  --color-soft: #f5f3ee;    /* подложки чипов */
+  --color-field: #f0ede6;   /* поля ввода/кнопки-призраки */
+
+  --color-acc: var(--acc);
+  --color-acc-d: var(--acc-d);
+  --color-acc-l: var(--acc-l);
+  --color-acc-bg: var(--acc-bg);
+  --color-acc-h: var(--acc-h);
+
+  --color-ok: #1e8a4c;      /* «Открыто», успех */
+  --color-warn: #e8930c;    /* рейтинг, внимание */
+  --color-danger: #c94f38;
+
+  --radius-card: 14px;
+  --radius-sheet: 22px;
+  --radius-pill: 999px;
+}
+
+html { -webkit-tap-highlight-color: transparent; }
+body {
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+}
+/* Числа и цены — табличные цифры, как в прототипе (.num) */
+.num { font-variant-numeric: tabular-nums; }
