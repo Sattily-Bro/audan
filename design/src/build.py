@@ -72,3 +72,43 @@ body=inline_images(body)
 open(OUT+'04-screens-v12.html','w').write(
  f'<!doctype html>\n<html lang="ru">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<title>{title}</title>\n</head>\n<body>\n{body}\n</body>\n</html>')
 print('built', len(out)//1024,'KB')
+
+# ======================= Audan Live → live.html =======================
+# Исходники: src/live/ (live.css, live-data.js, live-app.js, live-shell.html, live-map.svg, live-geo.json),
+# иконки: заказной пак + src/icons/live/ (линия 1.9 по брифу), фото: src/img/ → CSS-классы .im-NAME (по одному разу).
+import json, struct
+LV = SRC + 'live/'
+def jpeg_size(path):
+    with open(path, 'rb') as f:
+        d = f.read()
+    i = 2
+    while i < len(d):
+        if d[i] != 0xFF: i += 1; continue
+        m = d[i+1]
+        if m in (0xC0, 0xC1, 0xC2):
+            h, w = struct.unpack('>HH', d[i+5:i+9]); return w, h
+        i += 2 + struct.unpack('>H', d[i+2:i+4])[0]
+    return 1, 1
+lshell = open(LV + 'live-shell.html').read()
+lcss   = open(LV + 'live.css').read()
+ldata  = open(LV + 'live-data.js').read()
+lapp   = open(LV + 'live-app.js').read()
+lmap   = open(LV + 'live-map.svg').read()
+lgeo   = open(LV + 'live-geo.json').read()
+font   = '\n'.join(re.findall(r'@font-face\{[^}]*\}', base))
+lsyms  = dict((k, v.replace('stroke-width="2"', 'stroke-width="1.9"')) for k, v in pack.items())
+for f in sorted(glob.glob(SRC + 'icons/live/*.svg')):
+    n = os.path.basename(f)[:-4]; s = open(f).read()
+    inner = re.search(r'<svg[^>]*>(.*)</svg>', s, re.S).group(1)
+    attrs = re.search(r'<svg([^>]*)>', s).group(1)
+    attrs = re.sub(r'\s(xmlns|width|height)="[^"]*"', '', attrs)
+    lsyms[n] = '<symbol id="%s"%s>%s</symbol>' % (n, attrs, inner)
+ldefs = '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>\n' + '\n'.join(lsyms.values()) + '\n' + lmap + '\n</defs></svg>'
+lsrc = ldata + lapp + lshell
+names = sorted(n for n in set(re.findall(r"['\"]([a-z0-9-]+)['\"]", lsrc)) if os.path.exists(SRC + 'img/' + n + '.jpg'))
+imgcss = '\n'.join('.im-%s{background-image:url(%s)}' % (n, datauri(n + '.jpg')) for n in names)
+imgar = 'var IMGAR={' + ','.join('"%s":%.4f' % (n, (lambda wh: wh[0] / wh[1])(jpeg_size(SRC + 'img/' + n + '.jpg'))) for n in names) + '};'
+lout = (lshell.replace('@@FONT@@', font).replace('@@LIVECSS@@', lcss).replace('@@IMGCSS@@', imgcss).replace('@@DEFS@@', ldefs)
+        .replace('@@GEO@@', 'var GEO=' + lgeo + ';' + imgar).replace('@@DATA@@', ldata).replace('@@APP@@', lapp))
+open(OUT + 'live.html', 'w').write(lout)
+print('built live.html', len(lout) // 1024, 'KB ·', len(names), 'фото ·', len(lsyms), 'иконок')

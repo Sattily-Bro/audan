@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Audan Live — юзерфлоу раздела</title>
+<style>
+@@FONT@@
+@@LIVECSS@@
+@@IMGCSS@@
+
+/* ======================= SHELL (как flow.html) ======================= */
+html,body{ margin:0; padding:0; height:100%; overflow:hidden; background:#1C1C1F; color:#E6E6E9;
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif; -webkit-font-smoothing:antialiased; }
+*{ box-sizing:border-box; }
+.topbar{ position:fixed; top:0; left:0; right:0; height:44px; z-index:100; display:flex; align-items:center; gap:10px; padding:0 10px 0 14px; background:#232326; border-bottom:1px solid #303034; }
+.topbar .logo{ font-size:13.5px; font-weight:800; }
+.topbar .logo i{ font-style:normal; color:#6FA3F0; }
+.topbar .fname{ font-size:12.5px; color:#9A9AA0; font-weight:550; }
+.topbar .fname b{ color:#CFCFD4; font-weight:650; }
+.topbar a{ color:#9A9AA0; font-size:12px; font-weight:600; text-decoration:none; border:1px solid #3A3A40; border-radius:8px; padding:6px 10px; }
+.topbar a:hover{ color:#fff; border-color:#55555C; }
+.spacer{ flex:1; }
+.zbox{ display:flex; align-items:center; background:#2C2C30; border:1px solid #3A3A40; border-radius:8px; overflow:hidden; }
+.zbox button{ width:30px; height:30px; border:0; background:transparent; color:#CFCFD4; font-size:15px; cursor:pointer; font-family:inherit; }
+.zbox button:hover{ background:#3A3A40; }
+.zbox .pct{ min-width:52px; text-align:center; font-size:12px; font-weight:650; color:#CFCFD4; cursor:pointer; }
+.present-btn{ height:32px; border:0; background:#0F5FCC; color:#fff; border-radius:8px; padding:0 14px; font-family:inherit; font-size:12.5px; font-weight:750; cursor:pointer; }
+.sidebar{ position:fixed; top:44px; left:0; bottom:0; width:236px; z-index:90; background:#232326; border-right:1px solid #303034; display:flex; flex-direction:column; }
+.sidebar .shh{ padding:14px 16px 8px; font-size:10.5px; font-weight:800; letter-spacing:.1em; color:#7A7A82; text-transform:uppercase; }
+.sidebar .list{ flex:1; overflow-y:auto; padding:0 8px 14px; }
+.sitem{ display:flex; align-items:center; gap:9px; padding:7px 9px; border-radius:8px; cursor:pointer; }
+.sitem:hover{ background:#2C2C30; }
+.sitem.on{ background:#16243D; }
+.sitem .no{ width:20px; height:20px; border-radius:6px; background:#2C2C30; color:#9A9AA0; font-size:10.5px; font-weight:750; display:flex; align-items:center; justify-content:center; flex:none; }
+.sitem.on .no{ background:#0F5FCC; color:#fff; }
+.sitem .nm{ flex:1; min-width:0; font-size:12.5px; font-weight:600; color:#CFCFD4; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.sitem.on .nm{ color:#fff; }
+.sgrp{ padding:12px 9px 5px; font-size:10.5px; font-weight:800; letter-spacing:.08em; color:#6E6E76; text-transform:uppercase; }
+.sidebar .foot{ padding:12px 16px; border-top:1px solid #303034; font-size:11px; line-height:1.6; color:#6E6E76; }
+.sidebar .foot b{ color:#9A9AA0; }
+.inspector{ position:fixed; top:44px; right:0; bottom:0; width:310px; z-index:90; background:#232326; border-left:1px solid #303034; overflow-y:auto; padding:18px 18px 24px; }
+.inspector h3,.pdesc h3,#mdesc h3{ margin:0 0 3px; font-size:15.5px; font-weight:800; }
+.inspector .route,.pdesc .route,#mdesc .route{ font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:11px; color:#6FA3F0; margin-bottom:14px; }
+.inspector p,.pdesc p,#mdesc p{ font-size:12.5px; line-height:1.55; color:#ADADB4; margin:0 0 14px; }
+.inspector p b,.pdesc p b{ color:#DADADF; }
+.inspector h4,.pdesc h4{ margin:0 0 8px; font-size:10.5px; font-weight:800; letter-spacing:.1em; color:#7A7A82; text-transform:uppercase; }
+.inspector ul,.pdesc ul,#mdesc ul{ margin:0 0 16px; padding:0; list-style:none; }
+.inspector li,.pdesc li,#mdesc li{ font-size:12px; line-height:1.5; color:#9A9AA0; padding-left:14px; position:relative; margin-bottom:6px; }
+.inspector li::before,.pdesc li::before,#mdesc li::before{ content:""; position:absolute; left:1px; top:6px; width:5px; height:5px; border-radius:2px; background:#0F5FCC; }
+.inspector .edge{ font-size:11.5px; color:#9A9AA0; margin-bottom:6px; }
+.inspector .edge b{ color:#CFCFD4; font-weight:650; }
+.inspector .edge i{ font-style:normal; color:#6FA3F0; font-weight:800; margin-right:6px; }
+.srcf{ font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:10.5px; color:#77777F; border-top:1px solid #303034; padding-top:12px; margin-top:4px; line-height:1.6; }
+.inspector .go{ width:100%; height:38px; border:0; border-radius:9px; background:#0F5FCC; color:#fff; font-family:inherit; font-size:12.5px; font-weight:750; cursor:pointer; margin:2px 0 18px; }
+#viewport{ position:fixed; top:44px; left:236px; right:310px; bottom:0; overflow:hidden; background:#1C1C1F; background-image:radial-gradient(circle,#29292D 1px,transparent 1px); background-size:26px 26px; }
+#viewport.grabbing{ cursor:grabbing; }
+#world{ position:absolute; left:0; top:0; transform-origin:0 0; will-change:transform; }
+#world.anim{ transition:transform .32s cubic-bezier(.2,.7,.2,1); }
+#edges{ position:absolute; inset:0; overflow:visible; pointer-events:none; }
+#edges path{ fill:none; stroke:#5F5F67; stroke-width:2.5; }
+#edges path.hot{ stroke:#0F5FCC; }
+#edges path.dim{ opacity:.15; }
+.elabel{ position:absolute; transform:translate(-50%,-50%); background:rgba(35,35,38,.94); border:1px solid #3A3A40; color:#B9B9C0; font-size:12px; font-weight:650; border-radius:999px; padding:5px 12px; white-space:nowrap; pointer-events:none; }
+.elabel.hot{ border-color:rgba(15,95,204,.6); color:#8DB8F5; }
+.elabel.dim{ opacity:.14; }
+.rowlabel{ position:absolute; font-size:44px; font-weight:800; letter-spacing:-.02em; color:#3A3A40; white-space:nowrap; }
+.rowlabel span{ display:block; font-size:20px; font-weight:600; color:#55555C; letter-spacing:0; margin-top:6px; }
+.node{ position:absolute; }
+.node .flabel{ display:flex; align-items:center; gap:7px; margin:0 2px 9px; cursor:pointer; user-select:none; }
+.node .flabel .fn{ font-size:13px; font-weight:650; color:#9A9AA0; white-space:nowrap; }
+.node .flabel .dv{ font-size:11px; font-weight:650; color:#6E6E76; border:1px solid #3A3A40; border-radius:6px; padding:1px 6px; }
+.node .flabel .play{ width:20px; height:20px; border-radius:6px; border:0; background:transparent; color:#6E6E76; cursor:pointer; font-size:10px; padding:0; }
+.node .flabel .play:hover{ color:#8DB8F5; background:#2C2C30; }
+.node.sel .flabel .fn{ color:#8DB8F5; }
+.node .phone{ transition:outline-color .15s; outline:2.5px solid transparent; outline-offset:4px; }
+.node.sel .phone{ outline-color:#0F5FCC; }
+.node .scr{ pointer-events:none; }
+
+#present{ position:fixed; inset:0; z-index:120; background:#111114; display:none; }
+#present.on{ display:flex; flex-direction:column; }
+.pbar{ height:52px; flex:none; display:flex; align-items:center; gap:8px; padding:0 12px; background:#1A1A1E; border-bottom:1px solid #2A2A2F; overflow-x:auto; scrollbar-width:none; }
+.pbar::-webkit-scrollbar{ display:none; }
+.pbtn{ height:32px; border:1px solid #3A3A40; background:#232326; color:#E6E6E9; border-radius:8px; padding:0 11px; font-family:inherit; font-size:12px; font-weight:650; cursor:pointer; display:inline-flex; align-items:center; gap:6px; white-space:nowrap; flex:none; }
+.pbtn:hover{ border-color:#55555C; }
+.pbtn.on{ background:#16243D; border-color:#0F5FCC; color:#fff; }
+.pgrp{ display:flex; flex:none; border:1px solid #3A3A40; border-radius:8px; overflow:hidden; }
+.pgrp .pbtn{ border:0; border-radius:0; height:30px; background:#232326; }
+.pgrp .pbtn+.pbtn{ border-left:1px solid #3A3A40; }
+.pgrp .pbtn.on{ background:#0F5FCC; }
+.pbar .pt{ font-size:13px; font-weight:750; white-space:nowrap; }
+.pbar .ps{ font-size:11.5px; color:#8A8A92; font-weight:550; white-space:nowrap; font-family:ui-monospace,Menlo,monospace; }
+.pmain{ flex:1; display:flex; min-height:0; }
+.pstage{ flex:1; display:flex; align-items:center; justify-content:center; position:relative; min-width:0; overflow:hidden; }
+.pnav{ position:absolute; top:50%; transform:translateY(-50%); width:42px; height:42px; border-radius:50%; border:1px solid #3A3A40; background:#1E1F24; color:#E6E6E9; font-size:17px; cursor:pointer; z-index:5; }
+.pnav:hover{ border-color:#0F5FCC; color:#8DB8F5; }
+.pnav.prev{ left:16px; } .pnav.next{ right:16px; }
+#fitwrap{ transform-origin:center center; flex:none; }
+.pdesc{ width:310px; flex:none; border-left:1px solid #2A2A2F; padding:22px 20px; overflow-y:auto; background:#17171B; }
+#mdesc{ position:fixed; left:0; right:0; bottom:0; z-index:210; background:#17171B; border-top:1px solid #2A2A2F; border-radius:18px 18px 0 0; padding:20px 22px 26px; transform:translateY(105%); transition:transform .22s; max-height:70vh; overflow-y:auto; }
+#mdesc.on{ transform:none; }
+#mdesc .tg{ display:flex; flex-wrap:wrap; gap:8px; margin:6px 0 16px; }
+.mob-only{ display:none !important; }
+@media (max-width:900px){
+  .sidebar,.inspector,#viewport,.topbar{ display:none; }
+  .mob-only{ display:inline-flex !important; }
+  .desk-only{ display:none !important; }
+  #present.on .pdesc{ display:none; }
+  .pnav{ display:none; }
+  .pbar{ height:48px; }
+  #present .pstage{ align-items:stretch; justify-content:stretch; }
+  #fitwrap{ width:100%; transform:none !important; }
+  #fitwrap .phone{ width:100%; border-radius:0; padding:0; background:transparent; box-shadow:none; }
+  #fitwrap .phone::after{ display:none; }
+  #fitwrap .scr{ width:100% !important; height:calc(100dvh - 48px) !important; border-radius:0 !important; }
+}
+</style>
+</head>
+<body>
+@@DEFS@@
+
+<div class="topbar">
+  <span class="logo">Audan<i>.</i>kz</span>
+  <span class="fname">Дизайн / <b>Audan Live — раздел целиком</b></span>
+  <a href="flow.html">Основной юзерфлоу ↗</a>
+  <span class="spacer"></span>
+  <div class="zbox"><button id="z-out">−</button><span class="pct" id="z-pct">40%</span><button id="z-in">+</button></div>
+  <button class="present-btn" id="btn-present">▶ Презентация</button>
+</div>
+<div class="sidebar"><div class="shh">Экраны · <span id="scount"></span></div><div class="list" id="slist"></div>
+  <div class="foot">Колесо — панорама · <b>⌘/Ctrl + колесо</b> — масштаб · клик — выбрать · <b>двойной клик</b> — живой прототип</div></div>
+<div class="inspector" id="inspector"></div>
+<div id="viewport"><div id="world"><svg id="edges"></svg></div></div>
+
+<div id="present">
+  <div class="pbar">
+    <button class="pbtn desk-only" id="btn-exit">‹ Юзерфлоу</button>
+    <span class="pt" id="p-title"></span><span class="ps desk-only" id="p-route"></span>
+    <span class="spacer"></span>
+    <div class="pgrp desk-only" id="g-dev"><button class="pbtn" data-dev="ip">iPhone 390</button><button class="pbtn" data-dev="and">Android 360</button><button class="pbtn" data-dev="se">SE 375</button></div>
+    <div class="pgrp" id="g-lang"><button class="pbtn" data-lang="kk">ҚАЗ</button><button class="pbtn" data-lang="ru">РУС</button></div>
+    <button class="pbtn desk-only" data-tg="guest">Гость</button>
+    <button class="pbtn desk-only" data-tg="geo">Геолокация</button>
+    <button class="pbtn desk-only" data-tg="saver">Экономия трафика</button>
+    <button class="pbtn desk-only" data-tg="rm">Без анимации</button>
+    <button class="pbtn mob-only" id="btn-mdesc">ⓘ</button>
+    <button class="pbtn" id="btn-reset" title="Сбросить состояние">⟲</button>
+  </div>
+  <div class="pmain">
+    <div class="pstage">
+      <button class="pnav prev" id="p-prev">‹</button>
+      <div id="fitwrap"><div class="phone dev-ip" id="pphone"><div class="scr" id="live"></div></div></div>
+      <button class="pnav next" id="p-next">›</button>
+    </div>
+    <div class="pdesc" id="pdesc"></div>
+  </div>
+</div>
+<div id="mdesc"></div>
+
+<script>@@GEO@@</script>
+<script>@@DATA@@</script>
+<script>@@APP@@</script>
+<script>
+(function(){
+'use strict';
+/* ---------------- экраны: описание для владельца/разработчика ---------------- */
+var SCREENS=[
+ {id:'home', g:'Флоу', n:'Главная · баннер Live', sub:'/', pre:{scr:'home'},
+  p:'Вход в раздел с главной. Баннер — <b>статичная картинка карты</b> (не живая: не тратит квоту Яндекса) с фото-метками и аватарами авторов, у кого есть новое.',
+  f:['Счётчик «Сейчас N фото · K новых» — непросмотренные мной','Аватары — авторы с новыми публикациями (до 4)','Тап по баннеру или иконке «Live» → лента'],
+  src:'geoinsta.list (count, unseen) · статичная карта'},
+ {id:'feed', g:'Флоу', n:'Лента Live', sub:'/live', pre:{scr:'feed'},
+  p:'Главный экран раздела — <b>о районе, а не о людях</b>. Сверху «Қазір»: горячие точки — места, где сейчас снимают (Ипподром · 3 фото · 2 автора). Ниже — чипы категорий и публикации карточками. Сначала непросмотренное, потом «Вы всё посмотрели» и сетка просмотренного.',
+  f:['Карточка места: обложка — последнее непросмотренное фото, счётчик, кубок «Фото дня», синяя рамка — есть новое. Тап — просмотрщик места: все фото с этой точки от разных авторов подряд','В карточке поста место — первым (Ипподром · Событие), автор — над ним; тап по месту открывает его просмотрщик','Кольцо-таймер у каждой публикации: сколько из 24 часов осталось (жёлтое в последний час)','В «Дорогах и ЖКХ» метка «Официальный ответ», если ответил сельский округ','Свой аватар в шапке слева — «Мой Live» (лимит, статистика, архив); «+» справа — новая публикация','Пилюля посёлка, чип «Новые ▾» (сортировка), карусель до 10 фото, видео с петлёй без звука, двойной тап — лайк','Просмотр: ≥60% поста 0,9 с; порядок в визите не прыгает; новые — плашкой «↑ N»'],
+  src:'geoinsta.list · geoinsta.vote · views (seen) · photo_of_day · новое: spot (место)'},
+ {id:'story', g:'Флоу', n:'Просмотрщик места', sub:'/live/spot/{id}', pre:{scr:'story',story:{sp:'s:hippo',pi:0,si:0,t:.42}},
+  p:'Все фото <b>с одного места</b> за сутки подряд — от разных авторов. Это наш ответ «сторис»: истории рассказывают места, а не аккаунты. Строится на общем полноэкранном окне фото приложения; тёмный фон допустим.',
+  f:['Шапка: название места, «2 автора · 3 фото»; прогресс — сегмент на фото (видео — длиной ролика, фото — 5 с)','Внизу — чип автора текущего кадра (тап — профиль), подпись, поле комментария, лайк · отправить · поделиться','Тап справа — дальше, слева — назад, удержание — пауза, свайп вбок — следующее место с непросмотренным','Свайп вниз — закрыть, свайп вверх — публикация целиком','Тот же просмотрщик открывает публикации автора из его профиля'],
+  src:'geoinsta.list (группировка по spot — на клиенте или новое поле)'},
+ {id:'post', g:'Флоу', n:'Публикация + комментарии', sub:'/live/p/{id}', pre:{scr:'post',post:'p04'},
+  p:'Полная публикация: фото/видео, действия, подпись целиком, теги места · категории · посёлка, точное время и «осталось», просмотры и отправки, <b>место съёмки — статичная карта с лупой</b>, лента «С этого места», комментарии.',
+  f:['Шапка: назад · «Публикация» · один значок «…» (жалоба, блок; у своего — удалить)','«С этого места» — другие фото с той же точки (или из того же посёлка) горизонтальной лентой','Официальный ответ сельского округа закреплён над комментариями зелёной плашкой (аккаунт с флагом official)','Комментарий: текст, стикер или GIF, @упоминание с подсказкой, лайк; у каждого — «…» (жалоба/блок)','«Ответить» подставляет @имя — ответов второго уровня нет','«Открыть на карте» — живая карта раздела на этой точке'],
+  src:'geoinsta.comments · geoinsta.comment · geoinsta.commentVote · новое: users.official'},
+ {id:'grid', g:'Флоу', n:'Live · сетка', sub:'/live?view=grid', pre:{scr:'feed',mode:'grid'},
+  p:'Второй режим ленты — переключатель «лента / сетка» в ряду чипов. Сетка как Pinterest: <b>плитки двумя колонками по пропорциям фото</b>, под каждой — автор и лайки. Здесь же поиск по месту, автору и словам подписи и сегмент «Лучшее за неделю».',
+  f:['Masonry: плитка берёт высоту из размера обложки (известен до загрузки), пропорция 0.62–1.5','Поиск фильтрует сетку сразу при вводе','Долгое нажатие на плитку — шторка быстрых действий','Сегмент «Все · Друзья» действует и здесь','«Лучшее за неделю» — фото дня прошлых 7 дней (предложение: хранить победителей дольше 24 ч)'],
+  src:'geoinsta.list · новое: photo_of_day history (7 дней), search'},
+ {id:'friends', g:'Флоу', n:'Live · Друзья', sub:'/live?who=friends', pre:{scr:'feed',who:'friends'},
+  p:'Сегмент <b>Все · Друзья</b> — в ленте, сетке и на карте. «Друзья» — авторы, на которых я подписан: их места в «Места», их публикации в ленте, их метки на карте. Подписка — с профиля автора или прямо из карточки поста («· Подписаться» рядом с именем).',
+  f:['Подписка односторонняя, без подтверждения (как в Instagram/Threads); отписка — той же кнопкой в профиле','Нет подписок → пустое состояние с активными авторами дня и кнопками «Подписаться»','Друзья сегодня ничего не публиковали → «Друзья сегодня ещё не публиковали» + подсказки','Гость при тапе на «Друзья» или «Подписаться» получает шторку входа'],
+  src:'новое: users.follow / unfollow, followers, following · geoinsta.list&who=friends'},
+ {id:'author', g:'Флоу', n:'Профиль автора', sub:'/live/u/{username}', pre:{scr:'author',author:'aizhan_s'},
+  p:'Страница автора в духе Instagram: кольцо, итоги за сутки (публикации · лайки · просмотры), посёлок, «Написать». Сетка — только активные публикации (живут 24 часа), у каждой — сколько осталось.',
+  f:['Тап по кольцу — его сторис','«…» в шапке — пожаловаться / заблокировать','Сетка 3:4 со счётчиком лайков и значками видео/карусели'],
+  src:'новое: geoinsta.userPosts(username) или фильтр списка на клиенте'},
+ {id:'map', g:'Флоу', n:'Карта Live', sub:'/live/map', pre:{scr:'map',sel:'p01'},
+  p:'<b>Одна живая карта Яндекса</b> на весь экран. Переключение вкладок её не перезагружает — меняются метки и центр. Метки — фото-квадраты без анимации; снизу — карусель карточек, синхронная с метками.',
+  f:['Метка: синяя рамка — не видел, мельче и бледнее — видел, крупная с подписью — выбрана; ▶ — видео; кубок — «Фото дня»','Метки, которые накладываются, склеиваются в стопку с «+N»; тап — приближение','≤60 меток: берём новые/непросмотренные, остальное — в стопки','Листание карточек двигает карту к метке; тап по метке — карточка в центр','Сверху: сегмент «Все · Друзья», окно времени 1 ч · 6 ч · 24 ч, категории; посёлок выбирается в ленте','Справа: «Где я», + / −. © Яндекс и «Условия» — всегда видны над карточками; счётчика меток нет — карта говорит сама'],
+  src:'geoinsta.list (lat,lng) · Яндекс JS API — 1 загрузка на визит'},
+ {id:'mapsheet', g:'Флоу', n:'Публикация в шторке карты', sub:'/live/map?p={id}', pre:{scr:'map',sel:'p02',msheet:'half'},
+  p:'Тап по метке или по карточке открывает публикацию <b>полуэкранной шторкой-каруселью</b> поверх той же карты: фото сверху, ниже — автор, действия, подпись, место. Соседние публикации видны по бокам чуть ниже — их можно листать влево/вправо, лента бесконечная; карта следует за активной карточкой.',
+  f:['Шторка поднимается над нижним меню — вкладки видны всегда','Снапы: половина экрана → почти весь экран; закрытие — свайпом вниз','Внутри — то же, что на экране публикации; «Все комментарии» ведёт на полный экран'],
+  src:'—'},
+ {id:'reels', g:'Флоу', n:'Видео на весь экран', sub:'/live/video/{id}', pre:{scr:'reels',post:'p05'},
+  p:'Лента видео как Reels: свайп вверх/вниз — следующее. Звук включается тапом по видео или значком в шапке и сохраняется на сессию.',
+  f:['Справа — лайк, комментарии, отправить, поделиться, «…»','Внизу — автор, подпись, место → карта','Медленная сеть — 360p, экономия трафика — стоп-кадр с кнопкой'],
+  src:'video 720p/360p/loop240p · poster'},
+ {id:'mine', g:'Флоу', n:'Мой Live', sub:'/live/mine', pre:{scr:'mine'},
+  p:'Открывается по своему аватару в шапке ленты. Кабинет автора: лимит на сегодня (3 публикации, <b>удалённые тоже считаются</b> — видно сегментом), активные публикации со статистикой и временем до исчезновения, архив истёкших — видит только автор.',
+  f:['Сегменты лимита: синий — опубликовано, серый — удалено, пусто — свободно','Строка: лайки · комментарии · просмотры · отправки, полоска «сколько осталось»','Архив сеткой по датам'],
+  src:'geoinsta.mine · новое: used_today, limit'},
+ {id:'add', g:'Флоу', n:'Новая публикация · медиа', sub:'/live/new', pre:{scr:'add',draft:[{img:'lv-kokpar3'},{img:'lv-chuvalley'},{img:'lv-street'}],dsel:0,dplace:[1290,1530],dplaceAuto:true},
+  p:'Шаг 1 из 2. Фото берутся <b>системным пикером</b> (Галерея/Камера), здесь — превью, порядок и обложка. До 10 фото или одно видео до 30 с.',
+  f:['Тап по миниатюре — показать; второй тап — сделать обложкой; × — убрать','Подсказка лимита: «Сегодня ещё N», в последний раз — жёлтым'],
+  src:'Capacitor Camera / input[type=file] · EXIF GPS'},
+ {id:'adddet', g:'Флоу', n:'Новая публикация · подпись', sub:'/live/new/details', pre:{scr:'adddet',draft:[{img:'lv-kokpar3'}],dcat:'event',dcap:'Көкпар финалы! @aizhan_s қай жерде отырсың?',dplace:[1290,1530],dplaceAuto:true},
+  p:'Шаг 2 из 2: подпись с @, категория (обязательно), <b>точка съёмки</b> (обязательно). Точка берётся из GPS фото или телефона и показывается <b>статичной картой</b>; живая карта открывается, только если нажать «Изменить».',
+  f:['«Опубликовать» — единственная главная кнопка; неактивна без категории и точки','Посёлок определяется по точке автоматически'],
+  src:'geoinsta.create'},
+ {id:'pick', g:'Флоу', n:'Выбор точки', sub:'/live/new/place', pre:{scr:'pick',dplace:[1290,1530]},
+  p:'Живая карта с неподвижной булавкой в центре: двигаете карту — точка остаётся по центру, снизу обновляется посёлок и координаты. За пределами района выбрать нельзя.',
+  f:['«Где я» — центр на геолокацию (если разрешена)','© Яндекс над нижней карточкой'],
+  src:'Яндекс JS API (единственная карта на экране)'},
+
+ {id:'s-load', g:'Состояния', n:'Загрузка', sub:'/live', pre:{scr:'feed',loading:true}, p:'Скелет без мерцания (статичные блоки — дёшево на слабых Android).', f:['Форма повторяет ленту: кольца, чипы, пост'], src:'—'},
+ {id:'s-empty', g:'Состояния', n:'Пусто · 0 публикаций', sub:'/live', pre:{scr:'feed',empty:true}, p:'За сутки никто не публиковал. Одна главная кнопка — «Добавить фото». При активном фильтре — «По этому фильтру публикаций нет» и «Сбросить фильтр».', f:['Демо-посты Audan.kz в проде не дают этому случиться — состояние на случай их отключения'], src:'—'},
+ {id:'s-one', g:'Состояния', n:'1 публикация', sub:'/live', pre:{scr:'feed',only:'p01'}, p:'Одна публикация: без окна карты и без сетки просмотренного, внизу — приглашение добавить свою.', f:[], src:'—'},
+ {id:'s-many', g:'Состояния', n:'60+ публикаций на карте', sub:'/live/map', pre:{scr:'map',many:true,sel:'p01'}, p:'Весь район: метки склеиваются в стопки «+N», на карте не больше 60 меток. Подпись «видно N · всего M».', f:['Тап по стопке — приближение ×2 к ней'], src:'—'},
+ {id:'s-guest', g:'Состояния', n:'Гость', sub:'/live/p/{id}', pre:{scr:'post',post:'p01',guest:true,sheet:'login'}, p:'Не вошёл: смотреть можно всё; лайк, комментарий, отправка, публикация и блокировка открывают общую шторку входа. Внизу вместо поля — «Войдите, чтобы комментировать».', f:['Пожаловаться гость может — это требование App Store'], src:'—'},
+ {id:'s-own', g:'Состояния', n:'Своя публикация', sub:'/live/p/{id}', pre:{scr:'post',post:'p23',sheet:'ownmore',sheetArg:'p23'}, p:'У своего поста «…» показывает статистику (просмотры, отправки, лайки), ссылку и «Удалить» — красным, с подтверждением «удалённая всё равно считается в лимите».', f:[], src:'geoinsta.delete'},
+ {id:'s-expire', g:'Состояния', n:'За минуту до исчезновения', sub:'/live/p/{id}', pre:{scr:'post',post:'p22',expSec:50}, p:'Последний час — время жёлтым и тонкая полоска под шапкой. В прототипе идёт обратный отсчёт: на нуле экран сменяется на «Время публикации вышло» (если человек в этот момент открыл пост).', f:['В ленте такой пост тоже с жёлтой полоской'], src:'expires_at'},
+ {id:'s-long', g:'Состояния', n:'10 фото + длинная подпись', sub:'/live/p/{id}', pre:{scr:'post',post:'p07',slide:{p07:3},expanded:{p07:true}}, p:'Карусель 4/10 и подпись ~1100 знаков: в ленте — 2 строки и «ещё», на экране публикации — 6 строк и «ещё», дальше целиком.', f:['Вертикальное фото ограничено 4:5, горизонтальное — 1.91:1: верстаем по размеру обложки до загрузки'], src:'—'},
+ {id:'s-cmts', g:'Состояния', n:'Комментарии: стикер, GIF, @', sub:'/live/p/{id}', pre:{scr:'post',post:'p01',scrollY:1080}, p:'Лента комментариев со стикером, GIF и упоминаниями. В поле ввода: стикер и GIF — значки, «Отправить» активна только с текстом; «@» открывает подсказку людей.', f:[], src:'geoinsta.comment (text|sticker|gif)'},
+ {id:'s-geo', g:'Состояния', n:'Геолокация запрещена', sub:'/live/map', pre:{scr:'map',geo:false,sheet:'geo'}, p:'«Где я» серый, расстояния заменены на посёлок, сортировка «Рядом» недоступна. Тап по «Где я» — общая шторка с «Открыть настройки».', f:[], src:'—'},
+ {id:'s-saver', g:'Состояния', n:'Экономия трафика / медленная сеть', sub:'/live', pre:{scr:'feed',saver:true,scrollTo:'p05'}, p:'Видео не запускается само: стоп-кадр, кнопка ▶ и «Медленная сеть · 360p · 0:18». Сверху ленты — пояснение.', f:['Сторис и Reels в этом режиме тоже ждут тапа'], src:'video 360p · Network Information API / Save-Data'},
+ {id:'s-report', g:'Состояния', n:'Жалоба', sub:'/live/p/{id}', pre:{scr:'post',post:'p04',sheet:'report'}, p:'Причина жалобы — общая шторка с выбором; «Отправить» активна после выбора. Дальше — тост «Модератор проверит за 24 часа».', f:['Блокировка автора — подтверждение и тост с «Вернуть»'], src:'geoinsta.report · users.block'},
+ {id:'s-quick', g:'Состояния', n:'Сетка · быстрые действия', sub:'/live?view=grid', pre:{scr:'feed',mode:'grid',sheet:'quick',sheetArg:'p02'}, p:'Долгое нажатие на плитку: общая шторка с превью, четырьмя действиями и «Открыть»/«Пожаловаться». Жалоба — обязательна везде, где виден пост.', f:[], src:'—'},
+ {id:'s-nofr', g:'Состояния', n:'Друзья · нет подписок', sub:'/live?who=friends', pre:{scr:'feed',who:'friends',follows:{}}, p:'Ни одной подписки: объясняем, что здесь будет, и предлагаем активных авторов дня с кнопками «Подписаться». После подписки лента друзей заполняется сразу.', f:[], src:'—'},
+ {id:'s-week', g:'Состояния', n:'Сетка · лучшее за неделю', sub:'/live?view=grid&week', pre:{scr:'feed',mode:'grid',gseg:'week'}, p:'Фото дня за прошлые 7 дней с датой на плитке. Единственное место, где живут публикации старше суток (предложение владельцу).', f:[], src:'новое: photo_of_day history'},
+ {id:'s-limit', g:'Состояния', n:'Лимит исчерпан', sub:'/live/new', pre:{scr:'add',used:['u','d','u']}, p:'Три публикации за сутки уже есть (одна удалена — всё равно считается). Объясняем почему и когда можно снова.', f:[], src:'used_today · resets_at'},
+ {id:'s-se', g:'Состояния', n:'iPhone SE · лента', sub:'/live', dev:'se', pre:{scr:'feed',dev:'se'}, p:'375×667 без «острова» и полосы «домой». Карусель и чипы на казахском влезают без обрезки.', f:[], src:'—'},
+ {id:'s-and', g:'Состояния', n:'Android 360 · карта', sub:'/live/map', dev:'and', pre:{scr:'map',dev:'and',sel:'p02'}, p:'360×800 с системной шапкой: верхний ряд карты сжимается, карточки — 300 px и листаются.', f:[], src:'—'}
+];
+var BYID={}; SCREENS.forEach(function(s){ BYID[s.id]=s; s.dev=s.dev||'ip'; });
+var ORDER=SCREENS.map(function(s){ return s.id; });
+var G={lang:'kk', dev:'ip', rm:false, guest:null, geo:null, saver:null};
+try{ var sv=JSON.parse(localStorage.getItem('audan-live-g')||'{}'); if(sv.lang) G.lang=sv.lang; if(sv.dev) G.dev=sv.dev; }catch(e){}
+function saveG(){ try{ localStorage.setItem('audan-live-g',JSON.stringify({lang:G.lang,dev:G.dev})); }catch(e){} }
+
+/* ---------------- канвас ---------------- */
+var PH={ip:[410,864],and:[378,818],se:[399,791]};
+var LABEL_H=34, STEP=520, ROW1=300, ROW2=1560, X0=120;
+var POS={}; var r1=0,r2=0;
+SCREENS.forEach(function(s){ if(s.g==='Флоу'){ POS[s.id]=[X0+r1*STEP,ROW1]; r1++; } else { POS[s.id]=[X0+r2*STEP,ROW2]; r2++; } });
+var WORLD_W=X0*2+Math.max(r1,r2)*STEP, WORLD_H=ROW2+900+120;
+var EDGES=[
+  ['home','feed','баннер «Audan Live»','h',1],
+  ['feed','story','тап по месту в «Қазір»','h',1],
+  ['story','post','свайп вверх','h',0],
+  ['post','grid','переключатель «сетка»','h',0],
+  ['grid','friends','сегмент «Друзья»','h',0],
+  ['friends','author','имя автора','h',0],
+  ['author','map','«Открыть на карте»','h',0],
+  ['feed','map','вкладка «Карта»',-560,1],
+  ['map','mapsheet','тап по карточке','h',0],
+  ['mapsheet','reels','видео → на весь экран','h',0],
+  ['reels','mine','вкладка «Мои»','h',0],
+  ['feed','add','«+» в шапке или у кольца',-760,1],
+  ['add','adddet','«Далее»','h',0],
+  ['adddet','pick','«Изменить» у точки','h',0]
+];
+var world=document.getElementById('world'), viewport=document.getElementById('viewport');
+function nodeHTML(s,i){
+  return '<div class="flabel"><span class="fn">'+(i+1)+' · '+s.n+'</span>'+(s.dev!=='ip'?'<span class="dv">'+(s.dev==='se'?'SE 375':'Android 360')+'</span>':'')+'<button class="play" title="Открыть в прототипе" data-exp="'+s.id+'">▶</button></div>'+
+    '<div class="phone dev-'+s.dev+'"><div class="scr"></div></div>';
+}
+function preOf(s,forLive){ var p={}; for(var k in s.pre) p[k]=s.pre[k]; p.lang=G.lang; if(!forLive) p.dev=s.dev; return p; }
+function paintNode(s){
+  var el=document.getElementById('node-'+s.id), scr=el.querySelector('.scr'), pre=preOf(s);
+  scr.className=LIVE.klass(pre); scr.innerHTML=LIVE.html(pre); LIVE.finish(scr,pre);
+}
+SCREENS.forEach(function(s,i){
+  var el=document.createElement('div'); el.className='node'; el.id='node-'+s.id; el.setAttribute('data-node',s.id);
+  el.style.left=POS[s.id][0]+'px'; el.style.top=POS[s.id][1]+'px'; el.innerHTML=nodeHTML(s,i); world.appendChild(el);
+});
+[['Флоу раздела','14 экранов · стрелки — реальные переходы',ROW1-190],['Состояния','бриф §6: загрузка, пусто, 1 и 60+, гость, свой пост, истекает, длинное, гео, трафик, устройства',ROW2-190]].forEach(function(r){
+  var d=document.createElement('div'); d.className='rowlabel'; d.style.left=X0+'px'; d.style.top=r[2]+'px'; d.innerHTML=r[0]+'<span>'+r[1]+'</span>'; world.appendChild(d); });
+function paintAll(){ SCREENS.forEach(paintNode); }
+paintAll();
+
+var svg=document.getElementById('edges'), svgNS='http://www.w3.org/2000/svg';
+svg.setAttribute('width',WORLD_W); svg.setAttribute('height',WORLD_H);
+var defs=document.createElementNS(svgNS,'defs');
+defs.innerHTML='<marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#5F5F67"/></marker><marker id="arrH" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0F5FCC"/></marker>';
+svg.appendChild(defs);
+var edgeEls=[];
+function anch(id,side){ var s=BYID[id], x=POS[id][0], y=POS[id][1], w=PH[s.dev][0], h=PH[s.dev][1];
+  if(side==='r') return [x+w+10,y+LABEL_H+h/2]; if(side==='l') return [x-10,y+LABEL_H+h/2]; if(side==='t') return [x+w/2,y+LABEL_H-10]; return [x+w/2,y+LABEL_H+h+14]; }
+EDGES.forEach(function(e){
+  var a,b,c1,c2,mode=e[3];
+  if(mode==='h'){ a=anch(e[0],'r'); b=anch(e[1],'l'); var dx=Math.max(40,(b[0]-a[0])/2.4); c1=[a[0]+dx,a[1]]; c2=[b[0]-dx,b[1]]; }
+  else { a=anch(e[0],'t'); b=anch(e[1],'t'); c1=[a[0]+120,a[1]+mode]; c2=[b[0]-120,b[1]+mode]; }
+  var p=document.createElementNS(svgNS,'path'); p.setAttribute('d','M'+a[0]+' '+a[1]+' C'+c1[0]+' '+c1[1]+','+c2[0]+' '+c2[1]+','+b[0]+' '+b[1]);
+  p.setAttribute('marker-end',e[4]?'url(#arrH)':'url(#arr)'); if(e[4]) p.classList.add('hot'); svg.appendChild(p);
+  var mx=.125*a[0]+.375*c1[0]+.375*c2[0]+.125*b[0], my=.125*a[1]+.375*c1[1]+.375*c2[1]+.125*b[1];
+  var lb=document.createElement('div'); lb.className='elabel'+(e[4]?' hot':''); lb.textContent=e[2]; lb.style.left=mx+'px'; lb.style.top=my+'px'; world.appendChild(lb);
+  edgeEls.push({from:e[0],to:e[1],path:p,label:lb});
+});
+
+var tx=0,ty=0,sc=.4;
+function apply(){ world.style.transform='translate('+tx+'px,'+ty+'px) scale('+sc+')'; document.getElementById('z-pct').textContent=Math.round(sc*100)+'%'; }
+function clampScale(v){ return Math.max(.06,Math.min(1.6,v)); }
+function zoomAt(px,py,ns){ ns=clampScale(ns); tx=px-(px-tx)*(ns/sc); ty=py-(py-ty)*(ns/sc); sc=ns; apply(); }
+function animate(fn){ world.classList.add('anim'); fn(); setTimeout(function(){ world.classList.remove('anim'); },340); }
+function fit(){ var vw=viewport.clientWidth, vh=viewport.clientHeight; var s=clampScale(Math.min(vw/WORLD_W,vh/WORLD_H)*.96); sc=s; tx=(vw-WORLD_W*s)/2; ty=(vh-WORLD_H*s)/2; apply(); }
+function centerOn(id,s){ var vw=viewport.clientWidth, vh=viewport.clientHeight; s=s||Math.max(sc,.55); var d=PH[BYID[id].dev];
+  var cx=POS[id][0]+d[0]/2, cy=POS[id][1]+(LABEL_H+d[1])/2; animate(function(){ sc=clampScale(s); tx=vw/2-cx*sc; ty=vh/2-cy*sc; apply(); }); }
+viewport.addEventListener('wheel',function(ev){ ev.preventDefault();
+  if(ev.ctrlKey||ev.metaKey){ var r=viewport.getBoundingClientRect(); zoomAt(ev.clientX-r.left,ev.clientY-r.top,sc*Math.pow(1.0016,-ev.deltaY*3)); }
+  else { tx-=ev.deltaX; ty-=ev.deltaY; apply(); } },{passive:false});
+var pan=null;
+viewport.addEventListener('pointerdown',function(ev){ if(ev.button!==0) return; if(ev.target.closest('[data-exp]')) return; pan={x:ev.clientX,y:ev.clientY,tx:tx,ty:ty,moved:false,target:ev.target}; viewport.setPointerCapture(ev.pointerId); });
+viewport.addEventListener('pointermove',function(ev){ if(!pan) return; var dx=ev.clientX-pan.x, dy=ev.clientY-pan.y; if(Math.abs(dx)+Math.abs(dy)>3) pan.moved=true; if(pan.moved){ viewport.classList.add('grabbing'); tx=pan.tx+dx; ty=pan.ty+dy; apply(); } });
+viewport.addEventListener('pointerup',function(){ viewport.classList.remove('grabbing'); if(pan&&!pan.moved){ var n=pan.target.closest('.node'); select(n?n.getAttribute('data-node'):null); } pan=null; });
+viewport.addEventListener('dblclick',function(ev){ var n=ev.target.closest('.node'); if(n) openPresent(n.getAttribute('data-node')); });
+document.addEventListener('click',function(ev){ var b=ev.target.closest('[data-exp]'); if(b){ ev.stopPropagation(); openPresent(b.getAttribute('data-exp')); } });
+document.getElementById('z-in').onclick=function(){ animate(function(){ zoomAt(viewport.clientWidth/2,viewport.clientHeight/2,sc*1.25); }); };
+document.getElementById('z-out').onclick=function(){ animate(function(){ zoomAt(viewport.clientWidth/2,viewport.clientHeight/2,sc/1.25); }); };
+document.getElementById('z-pct').onclick=function(){ animate(fit); };
+
+var selected=null, inspector=document.getElementById('inspector');
+function descHTML(s,btn){
+  var out=EDGES.filter(function(e){return e[0]===s.id;}), inn=EDGES.filter(function(e){return e[1]===s.id;});
+  var h='<h3>'+s.n+'</h3><div class="route">'+s.sub+'</div>'+(btn?'<button class="go" data-exp="'+s.id+'">▶ Открыть в прототипе</button>':'')+'<p>'+s.p+'</p>';
+  if(s.f.length) h+='<h4>Что здесь работает</h4><ul>'+s.f.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul>';
+  if(out.length){ h+='<h4>Переходы отсюда</h4>'; out.forEach(function(e){ h+='<div class="edge"><i>→</i><b>'+BYID[e[1]].n+'</b> · '+e[2]+'</div>'; }); }
+  if(inn.length){ h+='<h4 style="margin-top:12px">Сюда приходят</h4>'; inn.forEach(function(e){ h+='<div class="edge"><i>←</i><b>'+BYID[e[0]].n+'</b></div>'; }); }
+  return h+'<div class="srcf">'+s.src+'</div>';
+}
+function renderInspector(id){
+  if(!id){ inspector.innerHTML='<h3>Audan Live</h3><div class="route">раздел целиком · бриф владельца</div>'+
+    '<p>Живые снимки района с точкой на карте, 24 часа. Раздел собран вокруг <b>мест, а не аккаунтов</b>: «Места» (горячие точки) → лента карточками с таймерами или сетка как Pinterest → просмотрщик места → карта с каруселью публикаций. Подписки: сегмент «Все · Друзья» везде. Двойной клик по экрану — живой прототип, в нём всё кликается.</p>'+
+    '<h4>Жёсткие правила брифа — соблюдены</h4><ul><li>Одна живая карта на экран, смена вкладок её не перезагружает; остальные карты — картинки</li><li>≤60 меток, без анимации; © Яндекса всегда видно</li><li>«…» с жалобой и блоком у каждого поста и комментария</li><li>Звук видео только по тапу; тёмные — только полноэкранные окна</li><li>Без эффектов нажатия; движение .32,.72,0,1 · 250–320 мс; «Без анимации» — статично</li><li>Акцент #0F5FCC, шрифт 11–28 по шкале, радиусы 12–22</li></ul>'+
+    '<h4>Порядок ленты</h4><p>Сначала непросмотренное: «Фото дня» (если не видел), дальше по новизне; демо Audan.kz — в конце. Черта «Вы всё посмотрели», под ней просмотренное сеткой по лайкам. Внутри визита порядок фиксирован. Полные правила — <b>design/LIVE-SPEC.md</b>.</p>'+
+    '<p>В презентации сверху: устройство (390 / 360 / SE), язык ҚАЗ/РУС (по умолчанию казахский), «Гость», «Геолокация», «Экономия трафика», «Без анимации».</p>'; return; }
+  inspector.innerHTML=descHTML(BYID[id],true);
+}
+function select(id){ selected=id;
+  document.querySelectorAll('.node').forEach(function(n){ n.classList.toggle('sel',n.getAttribute('data-node')===id); });
+  document.querySelectorAll('.sitem').forEach(function(n){ n.classList.toggle('on',n.getAttribute('data-sid')===id); });
+  edgeEls.forEach(function(e){ var on=!id||e.from===id||e.to===id; e.path.classList.toggle('dim',!on); e.label.classList.toggle('dim',!on); });
+  renderInspector(id); }
+var slist=document.getElementById('slist'), lastG=null;
+SCREENS.forEach(function(s,i){
+  if(s.g!==lastG){ var gg=document.createElement('div'); gg.className='sgrp'; gg.textContent=s.g; slist.appendChild(gg); lastG=s.g; }
+  var el=document.createElement('div'); el.className='sitem'; el.setAttribute('data-sid',s.id);
+  el.innerHTML='<span class="no">'+(i+1)+'</span><span class="nm">'+s.n+'</span>';
+  el.onclick=function(){ select(s.id); centerOn(s.id); }; el.ondblclick=function(){ openPresent(s.id); }; slist.appendChild(el); });
+document.getElementById('scount').textContent=SCREENS.length;
+
+/* ---------------- презентация (живой прототип) ---------------- */
+var presentEl=document.getElementById('present'), live=document.getElementById('live'), pphone=document.getElementById('pphone');
+var isMobile=window.matchMedia('(max-width:900px)').matches, cur=null, st=null;
+function fitPhone(){ if(isMobile) return; var stage=document.querySelector('.pstage'), d=PH[st.dev];
+  var s=Math.min(1,(stage.clientHeight-36)/d[1],(stage.clientWidth-120)/d[0]); var fw=document.getElementById('fitwrap'); fw.style.width=d[0]+'px'; fw.style.height=d[1]+'px'; fw.style.transform='scale('+s+')'; }
+function syncBar(){
+  document.querySelectorAll('[data-dev]').forEach(function(b){ b.classList.toggle('on',b.getAttribute('data-dev')===st.dev); });
+  document.querySelectorAll('[data-lang]').forEach(function(b){ b.classList.toggle('on',b.getAttribute('data-lang')===st.lang); });
+  document.querySelectorAll('[data-tg]').forEach(function(b){ var k=b.getAttribute('data-tg'); b.classList.toggle('on',!!st[k]); });
+}
+function descFor(s){ document.getElementById('p-title').textContent=s.n; document.getElementById('p-route').textContent=s.sub;
+  document.getElementById('pdesc').innerHTML=descHTML(s,false);
+  document.getElementById('mdesc').innerHTML='<div class="tg">'+['guest','geo','saver','rm'].map(function(k){ return '<button class="pbtn'+(st[k]?' on':'')+'" data-tg="'+k+'">'+({guest:'Гость',geo:'Геолокация',saver:'Экономия трафика',rm:'Без анимации'})[k]+'</button>'; }).join('')+'</div>'+descHTML(s,false); }
+var hooks={ ext:function(sid){ location.href='flow.html#s='+sid; }, onRender:function(){ syncBar(); } };
+function openPresent(id){
+  cur=id; var s=BYID[id], pre=preOf(s,true);
+  pre.dev=s.pre.dev||G.dev; if(isMobile){ pre.dev='ip'; pre.W=window.innerWidth; pre.H=window.innerHeight-48; }
+  ['guest','geo','saver','rm'].forEach(function(k){ if(G[k]!=null) pre[k]=G[k]; });
+  st=LIVE.state(pre); if(isMobile){ st.W=pre.W; st.H=pre.H; }
+  pphone.className='phone dev-'+st.dev;
+  presentEl.classList.add('on'); descFor(s);
+  LIVE.mount(live,st,hooks); fitPhone(); syncBar();
+  history.replaceState(null,'','#s='+id);
+}
+function closePresent(){ if(isMobile) return; presentEl.classList.remove('on'); history.replaceState(null,'',location.pathname); if(cur){ select(cur); centerOn(cur); } }
+function step(d){ var i=ORDER.indexOf(cur); openPresent(ORDER[(i+d+ORDER.length)%ORDER.length]); }
+document.getElementById('btn-exit').onclick=closePresent;
+document.getElementById('btn-present').onclick=function(){ openPresent(selected||'feed'); };
+document.getElementById('p-prev').onclick=function(){ step(-1); };
+document.getElementById('p-next').onclick=function(){ step(1); };
+document.getElementById('btn-reset').onclick=function(){ openPresent(cur); };
+document.getElementById('btn-mdesc').onclick=function(){ document.getElementById('mdesc').classList.toggle('on'); };
+document.addEventListener('click',function(ev){
+  var b=ev.target.closest('[data-dev]'); if(b){ G.dev=b.getAttribute('data-dev'); saveG(); st.dev=G.dev; st.W=LIVE.DEV[G.dev].W; st.H=LIVE.DEV[G.dev].H; st.view=null; st.pview=null; pphone.className='phone dev-'+st.dev; LIVE.render(live); fitPhone(); return; }
+  b=ev.target.closest('[data-lang]'); if(b){ G.lang=b.getAttribute('data-lang'); saveG(); st.lang=G.lang; LIVE.render(live); paintAll(); return; }
+  b=ev.target.closest('[data-tg]'); if(b){ var k=b.getAttribute('data-tg'); st[k]=!st[k]; G[k]=st[k]; if(k==='geo'||k==='saver') st.order=null; LIVE.render(live); descFor(BYID[cur]); return; }
+  if(!ev.target.closest('#mdesc')&&!ev.target.closest('#btn-mdesc')) document.getElementById('mdesc').classList.remove('on');
+});
+window.addEventListener('keydown',function(ev){
+  if(presentEl.classList.contains('on')){ if(ev.target.tagName==='INPUT'||ev.target.tagName==='TEXTAREA') return; if(ev.key==='Escape') closePresent(); if(ev.key==='ArrowRight') step(1); if(ev.key==='ArrowLeft') step(-1); return; }
+  if(ev.key==='+'||ev.key==='=') animate(function(){ zoomAt(viewport.clientWidth/2,viewport.clientHeight/2,sc*1.25); });
+  if(ev.key==='-') animate(function(){ zoomAt(viewport.clientWidth/2,viewport.clientHeight/2,sc/1.25); });
+  if(ev.key==='1'&&ev.shiftKey) animate(fit);
+  if(ev.key==='Escape') select(null);
+});
+window.addEventListener('resize',function(){ if(presentEl.classList.contains('on')) fitPhone(); });
+
+var hash=(location.hash.match(/s=([a-z0-9-]+)/)||[])[1];
+if(isMobile) openPresent(hash&&BYID[hash]?hash:'feed');
+else { fit(); renderInspector(null); if(hash&&BYID[hash]) openPresent(hash); }
+})();
+</script>
+</body>
+</html>
